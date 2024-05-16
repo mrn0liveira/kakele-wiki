@@ -1,0 +1,94 @@
+.card-shine-effect {
+  --shine-deg: 45deg;
+  --shine-background: linear-gradient(
+    var(--shine-deg),
+    transparent 20%,
+    transparent 40%,
+    rgba(247, 220, 220, 0.226) 50%,
+    rgba(251, 255, 191, 0.096) 55%,
+    transparent 70%,
+    transparent 100%
+  );
+  
+
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: -100% 0, 0 0;
+  background-image: var(--shine-background);
+  background-size: 250% 250%, 100% 100%;
+  animation: shine-animation 2s linear infinite;
+}
+
+.card-shine-effect-2 {
+  --shine-deg: 45deg;
+  --shine-background: linear-gradient(
+    var(--shine-deg),
+    transparent 20%,
+    transparent 40%,
+    rgba(247, 220, 220, 0.068) 50%,
+    rgba(251, 255, 191, 0.048) 55%,
+    transparent 70%,
+    transparent 100%
+  );
+  
+
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: -100% 0, 0 0;
+  background-image: var(--shine-background);
+  background-size: 250% 250%, 100% 100%;
+  animation: shine-animation 2s linear infinite;
+}
+
+.card-shine-effect-red {
+  --shine-deg: 45deg;
+  --shine-background: linear-gradient(
+    var(--shine-deg),
+    transparent 20%,
+    transparent 40%,
+    rgba(255, 0, 0, 0.199) 50%,  /* Red color with 50% transparency */
+    rgba(255, 0, 0, 0.151) 55%,  /* Red color with 30% transparency */
+    transparent 70%,
+    transparent 100%
+  );
+
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: -100% 0, 0 0;
+  background-image: var(--shine-background);
+  background-size: 250% 250%, 100% 100%;
+  animation: shine-animation 2s linear infinite;
+}
+
+.card-shine-effect-green {
+  --shine-deg: 45deg;
+  --shine-background: linear-gradient(
+    var(--shine-deg),
+    transparent 20%,
+    transparent 40%,
+    rgba(0, 255, 0, 0.219) 50%,  /* Green color with 50% transparency */
+    rgba(0, 255, 0, 0.13) 55%,  /* Green color with 30% transparency */
+    transparent 70%,
+    transparent 100%
+  );
+
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: -100% 0, 0 0;
+  background-image: var(--shine-background);
+  background-size: 250% 250%, 100% 100%;
+  animation: shine-animation 2s linear infinite;
+}
+
+@keyframes shine-animation {
+  0% {
+    background-position: -100% 0, 0 0;
+  }
+  100% {
+    background-position: 200% 0, 0 0;
+  }
+}

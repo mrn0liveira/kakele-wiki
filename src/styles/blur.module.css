@@ -1,0 +1,14 @@
+.container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  pointer-events: none;
+}
+
+.container {
+  mask: linear-gradient(90deg, transparent, black 15% 85%, transparent);
+  width: 100%;
+  display: grid;
+  min-height: 100px;
+  min-width: 300px;
+}

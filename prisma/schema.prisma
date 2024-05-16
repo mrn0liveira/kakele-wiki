@@ -1,0 +1,149 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DIRECT_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum BlogLanguage {
+  en
+  pt
+  es
+  pl
+}
+
+enum MapPointType {
+  City
+  Depot
+  Dungeon
+  Quest
+  EliteMonster
+  MonsterInstance
+}
+
+model MapPoint {
+  id              Int    @id @default(autoincrement())
+  authorId        String
+  name            String
+  latitude        Float
+  longitude       Float
+  ingameLatitude  Float
+  ingameLongitude Float
+  tag             String
+  author          User   @relation(fields: [authorId], references: [id])
+}
+
+model User {
+  id                    String                 @id @default(cuid())
+  name                  String?
+  email                 String?                @unique
+  emailVerified         DateTime?
+  image                 String?
+  password              String?
+  role                  UserRole               @default(USER)
+  accounts              Account[]
+  isTwoFactorEnabled    Boolean                @default(false)
+  twoFactorConfirmation TwoFactorConfirmation?
+  blog                  Blog[]
+  MapPoint              MapPoint[]
+  subscriptions         UserSubscription[]
+}
+
+model Subscription {
+  id    String             @id @default(cuid())
+  name  String
+  price Float
+  users UserSubscription[]
+}
+
+model UserSubscription {
+  id             String       @id @default(cuid())
+  user           User         @relation(fields: [userId], references: [id])
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  startDate      DateTime     @default(now())
+  expirationDate DateTime
+  isActive       Boolean      @default(true)
+
+  userId         String
+  subscriptionId String
+
+  @@unique([userId, subscriptionId])
+}
+
+model Blog {
+  id          String       @id @default(cuid())
+  title       String       @unique
+  language    BlogLanguage @default(pt)
+  description String
+  imageUrl    String?
+  authorId    String
+  content     String       @db.Text
+  published   Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  publishedAt DateTime?
+  author      User         @relation(fields: [authorId], references: [id])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+}

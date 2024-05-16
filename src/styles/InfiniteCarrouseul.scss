@@ -1,0 +1,30 @@
+.carousel-container {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .carousel-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .carousel-track {
+    display: flex;
+    position: absolute; 
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    gap: 16px;
+    animation: slide 20s linear infinite;
+  }
+
+  @keyframes slide {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: -100%;
+    }
+  }
