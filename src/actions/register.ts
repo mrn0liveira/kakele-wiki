@@ -37,7 +37,7 @@ export const register = async (values: zod.infer<typeof RegisterSchema>) => {
     };
   }
 
-  const { email, password, name } = validatedFields.data;
+  const { email, password, name, typeInterest } = validatedFields.data;
 
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
@@ -52,6 +52,7 @@ export const register = async (values: zod.infer<typeof RegisterSchema>) => {
       email,
       password: hashedPassword,
       ip: hashedIp,
+      typeInterest
     },
   });
 
