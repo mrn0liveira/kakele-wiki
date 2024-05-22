@@ -13,6 +13,7 @@ import HeroTrailer from "@/src/components/home/hero-trailer";
 
 import "@/src/styles/Text-Animation.scss";
 import "@/src/styles/Home-card.css";
+
 import Card from "../components/ui/bordered-card";
 
 interface CardProps {
@@ -23,11 +24,10 @@ interface CardProps {
 	bgColor?: string;
 }
 
-export const revalidate = 60 * 20;
-
 async function getBlogs() {
 	const res = await fetch(
 		`${process.env.NEXT_PUBLIC_APP_URL}/api/blog?amount=4`,
+		{ next: { revalidate: 60 * 10 } },
 	);
 
 	return await res.json();

@@ -74,12 +74,13 @@ export const Navbar = () => {
 						href="/"
 					>
 						<Image
+							className="h-6 w-6"
 							alt="Kakele Online"
-							height={32}
+							height={64}
 							src={
-								"https://res.cloudinary.com/dl3asnoii/image/upload/v1714587958/kakele.com.br/general/cake.png"
+								"https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/Birthday Cake Slice.png"
 							}
-							width={32}
+							width={64}
 						/>
 						<div
 							className={cn(
@@ -121,7 +122,7 @@ export const Navbar = () => {
 															className="aspect-square h-[12rem] p-6 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
 															height={200}
 															src={
-																"https://res.cloudinary.com/dl3asnoii/image/upload/v1713726404/sprites/items/Kajin%20Helmet.png"
+																"https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/Kajin%20Helmet.png"
 															}
 															width={200}
 														/>
@@ -146,7 +147,7 @@ export const Navbar = () => {
 														<Image
 															alt={item.label}
 															height={40}
-															src={`https://res.cloudinary.com/dl3asnoii/image/upload/v1713726404/sprites/items/${item.image}.png`}
+															src={`https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/${item.image}.png`}
 															width={40}
 														/>
 														<span className="text-md ml-2">
@@ -192,7 +193,7 @@ export const Navbar = () => {
 															className="aspect-square h-[12rem] p-6 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
 															height={200}
 															src={
-																"https://res.cloudinary.com/dl3asnoii/image/upload/v1713726404/sprites/items/Navigation Map.png"
+																"https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/Navigation Map.png"
 															}
 															width={200}
 														/>
@@ -279,12 +280,13 @@ export const Navbar = () => {
 										href="/"
 									>
 										<Image
+											className="h-6 w-6"
 											alt="Kakele Online"
-											height={32}
+											height={64}
 											src={
-												"https://res.cloudinary.com/dl3asnoii/image/upload/v1714587958/kakele.com.br/general/cake.png"
+												"https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/Birthday Cake Slice.png"
 											}
-											width={32}
+											width={64}
 										/>
 										<div
 											className={cn(

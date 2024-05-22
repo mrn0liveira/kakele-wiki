@@ -29,6 +29,10 @@ enum MapPointType {
   MonsterInstance
 }
 
+enum TypeInterest {
+  Kakele
+}
+
 model MapPoint {
   id              Int    @id @default(autoincrement())
   authorId        String
@@ -54,7 +58,7 @@ model User {
   twoFactorConfirmation TwoFactorConfirmation?
   blog                  Blog[]
   MapPoint              MapPoint[]
-  typeInterest          String                 @default(null)
+  typeInterest          TypeInterest?
 }
 
 model Blog {
