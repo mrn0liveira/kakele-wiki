@@ -45,7 +45,7 @@ export default function BlessPicker({
 							index > value ? "grayscale" : "",
 							disabledValues.includes(index) ? "grayscale" : "",
 						)}
-						key={index}
+						key={`blessRange-${index}`}
 						onClick={() => {
 							if (disabledValues.includes(index)) return;
 
@@ -62,7 +62,7 @@ export default function BlessPicker({
 								disabledValues.includes(index) ? "" : "cursor-pointer",
 							)}
 							height={32}
-							src="https://res.cloudinary.com/dl3asnoii/image/upload/v1709327413/kakele.com.br/icons/bless.png"
+							src="https://res.cloudinary.com/dbkrvt2x0/image/upload/v1715883713/kakele-wiki/icons/bless.png"
 							style={{
 								filter: filter,
 							}}

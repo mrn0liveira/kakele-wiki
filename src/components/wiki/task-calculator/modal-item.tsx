@@ -127,7 +127,7 @@ export const KakeleTaskItemModal = ({
 										height={100}
 										src={
 											new URL(
-												`https://res.cloudinary.com/dl3asnoii/image/upload/v1713726404/sprites/monsters/${task.name}.png`,
+												`https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/monsters/${task.name}.png`,
 											).href
 										}
 										width={100}
@@ -138,7 +138,7 @@ export const KakeleTaskItemModal = ({
 										height={50}
 										src={
 											new URL(
-												`https://res.cloudinary.com/dl3asnoii/image/upload/v1713726404/sprites/items//${task.target}.png`,
+												`https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/${task.target}.png`,
 											).href
 										}
 										width={50}
@@ -211,7 +211,7 @@ export const KakeleTaskItemModal = ({
 													height={46}
 													src={
 														new URL(
-															`https://res.cloudinary.com/dl3asnoii/image/upload/v1713726404/sprites/monsters/${source.name}.png`,
+															`https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/monsters/${source.name}.png`,
 														).href
 													}
 													width={46}

@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import type { User } from '@prisma/client';
 
 import { db } from '@/src/lib/db';
 
@@ -7,7 +7,8 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
     const user = await db.user.findUnique({ where: { email } });
 
     return user;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return null;
   }
 };

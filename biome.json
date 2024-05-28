@@ -6,6 +6,9 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "correctness": {
+        "useJsxKeyInIterable": "off"
+      },
       "a11y": {
         "useKeyWithClickEvents": "off"
       },

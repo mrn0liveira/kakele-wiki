@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			images: [
 				{
 					type: "image/png",
-					url: "https://res.cloudinary.com/dl3asnoii/image/upload/v1713903492/kakele.com.br/og.png",
+					url: "https://res.cloudinary.com/dbkrvt2x0/image/upload/v1715882892/kakele-wiki/og/og.png",
 					width: 1200,
 					height: 630,
 				},
@@ -60,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			images: [
 				{
 					type: "image/png",
-					url: "https://res.cloudinary.com/dl3asnoii/image/upload/v1713903492/kakele.com.br/og.png",
+					url: "https://res.cloudinary.com/dbkrvt2x0/image/upload/v1715882892/kakele-wiki/og/og.png",
 					width: 1200,
 					height: 630,
 				},
@@ -88,7 +88,7 @@ export default async function RootLayout({ children }: LayoutProps) {
 				>
 					<ClientSideProviders initialLanugage={initialLanguage}>
 						<CookiesProvider>
-							<div className="container flex min-h-screen flex-1 flex-col items-center justify-center px-2">
+							<div className="container flex min-h-full flex-1 flex-col items-center justify-center px-2">
 								<CoinshubAd text={t("home.ad")} />
 								<Navbar />
 								{children}

@@ -1,4 +1,20 @@
 const messages = {
+  forgeCalculator: {
+    title: 'Forge Calculator',
+    descriptiom: 'Calculate the amount of resources needed to forge an item.',
+    inputText: 'Forge Level',
+    popoverTitle: 'Market Value',
+    popoverDescription: 'Add the market value of the item.',
+    cardTitle: 'Select an value to calculate',
+    cardDescription: 'Click on the resource to set the value',
+    cost: 'Forge Cost',
+    copper: 'Copper',
+    tin: 'Tin',
+    silver: 'Silver',
+    iron: 'Iron',
+    gold: 'Gold',
+    money: 'Money',
+  },
   coinsHub: {
     ad1: 'Buy Kakele Items',
     modal1: 'Help keep the project online!',
@@ -23,6 +39,7 @@ const messages = {
       blessCalculator: 'Bless Calculator',
       setCalculator: 'Set Calculator',
       tasksList: 'Tasks List',
+      forgeCalculator: 'Forge Calculator',
       gameMap: 'Game Map',
     },
   },
@@ -52,6 +69,10 @@ const messages = {
       tasks: {
         title: 'Tasks Calculator',
         description: 'Calculate the best tasks for your character based on rewards, level and items.',
+      },
+      forgeCalculator: {
+        title: 'Forge Calculator',
+        description: 'Calculate the amount of resources needed to forge an item.',
       },
     },
   },
@@ -171,6 +192,7 @@ const messages = {
     resultTitle: 'Items Set',
     excludeExpensiveItems: 'Exclude Expensive Items',
     resultDescription: 'Best set for your equipment based on level, vocation and items.',
+    expensive: 'Expensive',
   },
   items: {
     title: 'Kakele Items',

@@ -1,4 +1,20 @@
 const messages = {
+  forgeCalculator: {
+    title: 'Kalkulator Kuźni',
+    descriptiom: 'Oblicz ilość zasobów potrzebnych do wykucia przedmiotu.',
+    inputText: 'Poziom Kuźni',
+    popoverTitle: 'Wartość Rynkowa',
+    popoverDescription: 'Dodaj wartość rynkową przedmiotu.',
+    cardTitle: 'Wybierz wartość do obliczenia',
+    cardDescription: 'Kliknij na zasób, aby ustawić wartość',
+    cost: 'Koszt Kuźni',
+    copper: 'Miedź',
+    tin: 'Cyna',
+    silver: 'Srebro',
+    iron: 'Żelazo',
+    gold: 'Złoto',
+    money: 'Pieniądze',
+  },
   coinsHub: {
     ad1: 'Kup przedmioty z Kakele',
     modal1: 'Pomóż utrzymać projekt online!',
@@ -24,6 +40,7 @@ const messages = {
       setCalculator: 'Kalkulator zestawów',
       tasksList: 'Lista zadań',
       gameMap: 'Mapa gry',
+      forgeCalculator: 'Kalkulator Kuźni',
     },
   },
   blog: {
@@ -52,6 +69,10 @@ const messages = {
       tasks: {
         title: 'Kalkulator zadań',
         description: 'Oblicz najlepsze zadania dla swojej postaci na podstawie nagród, poziomu i przedmiotów.',
+      },
+      forgeCalculator: {
+        title: 'Kalkulator Kuźni',
+        description: 'Oblicz ilość zasobów potrzebnych do wykucia przedmiotu.',
       },
     },
   },
@@ -205,7 +226,7 @@ const messages = {
   },
   seo: {
     homeLayout: {
-      title: 'Wiki Kakele',
+      title: 'Kakele Wiki',
       description: 'Najlepsze miejsce do poprawy swojej rozgrywki za pomocą narzędzi i przewodników.',
       keywords: 'Kakele, Wiki, Narzędzia, Przewodniki, Poprawa, Gra, Grać, Rozgrywka, MMORPG, Tibia, Magia',
     },

@@ -1,4 +1,20 @@
 const messages = {
+  forgeCalculator: {
+    title: 'Calculadora de Forja',
+    descriptiom: 'Calcula la cantidad de recursos necesarios para forjar un artículo.',
+    inputText: 'Nivel de Forja',
+    popoverTitle: 'Valor de Mercado',
+    popoverDescription: 'Añade el valor de mercado del artículo.',
+    cardTitle: 'Selecciona un valor para calcular',
+    cardDescription: 'Haz clic en el recurso para establecer el valor',
+    cost: 'Costo de Forja',
+    copper: 'Cobre',
+    tin: 'Estaño',
+    silver: 'Plata',
+    iron: 'Hierro',
+    gold: 'Oro',
+    money: 'Dinero',
+  },
   coinsHub: {
     ad1: 'Compra objetos de Kakele',
     modal1: '¡Ayuda a mantener el proyecto en línea!',
@@ -24,6 +40,7 @@ const messages = {
       setCalculator: 'Calculadora de Conjunto',
       tasksList: 'Lista de Tareas',
       gameMap: 'Mapa del Juego',
+      forgeCalculator: 'Calculadora de Forja',
     },
   },
   blog: {
@@ -52,6 +69,10 @@ const messages = {
       tasks: {
         title: 'Calculadora de Tareas',
         description: 'Calcula las mejores tareas para tu personaje basado en recompensas, nivel y objetos.',
+      },
+      forgeCalculator: {
+        title: 'Calculadora de Forja',
+        description: 'Calcula la cantidad de recursos necesarios para forjar un artículo.',
       },
     },
   },
@@ -206,7 +227,7 @@ const messages = {
   },
   seo: {
     homeLayout: {
-      title: 'Wiki de Kakele',
+      title: 'Kakele Wiki',
       description: 'El mejor lugar para mejorar tu experiencia de juego con Herramientas y Guías.',
       keywords: 'Kakele, Wiki, Herramientas, Guías, Mejorar, Juego, Jugar, Jugabilidad, MMORPG, Tibia, Magia',
     },

@@ -665,7 +665,7 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
                                 height={64}
                                 src={
                                   new URL(
-                                    `https://res.cloudinary.com/dl3asnoii/image/upload/v1713726404/sprites/items/${item.name}.png`
+                                    `https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/${item.name.replaceAll("'", '')}.png`
                                   ).href
                                 }
                                 width={64}

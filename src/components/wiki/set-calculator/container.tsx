@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { X } from 'lucide-react';
+import { DollarSign, X } from 'lucide-react';
 import Image from 'next/image';
 import { type Dispatch, type SetStateAction, forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,11 +10,13 @@ import { Input } from '@/src/components/ui/input';
 import { Toggle } from '@/src/components/ui/toggle';
 
 import { KakeleItemModal } from './modal-item';
-import { NewHoverTabs } from './new-hover-menu';
 
 import type { KakeleEquipmentItems, KakeleEquipmentOrWeapon, KakeleWeaponItems } from '@/src/types';
 import { getBestItemsForLevel } from '@/src/lib/kakele/set-calculator';
 import kakeleItems from '@/src/lib/kakele/items.js';
+import { cn } from '@/src/lib/utils';
+
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
 
 interface ComponentProps {
   lng: string;
@@ -201,7 +203,7 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
         <div className='flex flex-col items-center gap-4'>
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className='flex h-fit w-full flex-col rounded-md border-[1px] border-zinc-800 bg-zinc-900 p-4'
+            className='flex h-fit w-full flex-col rounded-md border-[1px] border-stone-800 bg-stone-900 p-4'
             exit={{ opacity: 0, y: 30 }}
             initial={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -235,40 +237,31 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
                 totalElements().map((x, index) => (
                   <motion.div
                     animate={{ opacity: 1 }}
-                    className='h-4 w-4 overflow-visible rounded-full bg-zinc-800 p-[2px]'
+                    className='h-4 w-4 overflow-visible rounded-full bg-stone-800 p-[2px]'
                     exit={{ opacity: 0 }}
                     initial={{ opacity: 0 }}
                     key={index}
                   >
-                    <Image
-                      alt={`${x}-element`}
-                      height={64}
-                      src={
-                        new URL(
-                          `https://res.cloudinary.com/dl3asnoii/image/upload/v1710366290/kakele.com.br/icons/${x.toLowerCase()}.png`
-                        ).href
-                      }
-                      width={64}
-                    />
+                    <div className={cn(elements.find((y) => y.id === x)?.bgColor, 'h-full w-full rounded-full')} />
                   </motion.div>
                 ))}
             </div>
           </motion.div>
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className='flex w-full flex-col items-center justify-center gap-4 rounded-md border-[1px] border-zinc-800 bg-zinc-900 p-2'
+            className='flex w-full flex-col items-center justify-center gap-4 rounded-md border-[1px] border-stone-800 bg-stone-900 p-2'
             exit={{ opacity: 0, y: 10 }}
             initial={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
           >
             <span className='text-xs font-black'>{t('setCalculator.totalStatsTitle')}</span>
-            <span className='w-full rounded-md bg-zinc-950/50 px-4 text-xs'>
+            <span className='w-full rounded-md bg-stone-950/50 px-4 text-xs'>
               {t('kakele.attributes.Attack')} {totalAttack()}
             </span>
-            <span className='w-full rounded-md bg-zinc-950/50 px-4 text-xs'>
+            <span className='w-full rounded-md bg-stone-950/50 px-4 text-xs'>
               {t('kakele.attributes.Magic')} {totalMagic()}
             </span>
-            <span className='w-full rounded-md bg-zinc-950/50 px-4 text-xs'>
+            <span className='w-full rounded-md bg-stone-950/50 px-4 text-xs'>
               {t('kakele.attributes.Armor')} {totalArmor()}
             </span>
           </motion.div>
@@ -313,7 +306,7 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
         >
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className='flex w-full flex-col gap-4 rounded-lg border-[1px] border-zinc-800 bg-zinc-900 p-4 lg:min-w-[32rem]'
+            className='flex w-full flex-col gap-4 rounded-lg border-[1px] border-stone-800 bg-stone-900 p-4 lg:min-w-[32rem]'
             exit={{ opacity: 0, y: 30 }}
             initial={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -322,235 +315,95 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
               <h2 className='text-xl font-bold'>{t('setCalculator.filtersTitle')}</h2>
               <span className='text-sm'>{t('setCalculator.filtersDescription')}</span>
             </div>
-            <div className='flex flex-row items-center justify-center gap-8'>
-              <div className='flex flex-col items-center justify-center'>
-                <span className='text-sm font-semibold'>{t('setCalculator.vocationMenuTitle')}</span>
-                <span className='mb-4 text-sm font-semibold text-zinc-400'>{t(`kakele.vocations.${vocation.id}`)}</span>
-                <NewHoverTabs
-                  trigger={
-                    <Image
-                      alt='Vocation Icon'
-                      className='h-16 w-16 rounded-full bg-zinc-800 lg:h-20 lg:w-20'
-                      height={100}
-                      id='vocation-menu'
-                      src={
-                        new URL(
-                          `https://res.cloudinary.com/dl3asnoii/image/upload/v1710366290/kakele.com.br/icons/${vocation.id.toLowerCase()}.png`
-                        ).href
-                      }
-                      width={100}
-                    />
-                  }
-                >
-                  <motion.div
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    className='absolute left-0 top-[calc(100%_+_24px)] z-[999] w-fit rounded-lg border border-zinc-700 bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-800 p-[4px]'
-                    exit={{
-                      opacity: 0,
-                      y: 8,
-                    }}
-                    id='overlay-content'
-                    initial={{
-                      opacity: 0,
-                      y: 8,
-                    }}
-                  >
-                    {/* <Bridge /> */}
-                    {/* <Nub id="vocation-menu" /> */}
-
-                    <div className='w-fit overflow-hidden'>
-                      <motion.div
-                        animate={{ opacity: 1, x: 0 }}
-                        initial={{
-                          opacity: 0,
-                          x: -100,
+            <div className='flex w-full flex-row items-center justify-center gap-6'>
+              <Popover>
+                <PopoverTrigger className='flex flex-col'>
+                  <span className='text-sm font-semibold'>{t('setCalculator.vocationMenuTitle')}</span>
+                  <span className='mb-4 text-sm font-semibold text-stone-400'>
+                    {t(`kakele.vocations.${vocation.id}`)}
+                  </span>
+                </PopoverTrigger>
+                <PopoverContent className='flex w-fit flex-col items-center justify-center gap-4 bg-stone-950/80 backdrop-blur-md'>
+                  <div className='flex w-full flex-col items-start'>
+                    <span className='text-md'>Vocation</span>
+                    <span className='text-xs'>Select your vocation</span>
+                  </div>
+                  <div className='flex w-full flex-wrap items-start gap-2'>
+                    {vocations.map((v: VocationType, index: number) => (
+                      <span
+                        onClick={() => {
+                          setVocation(v);
                         }}
-                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        key={v.id}
+                        className={cn(
+                          v.id === vocation.id ? 'bg-stone-800' : 'bg-stone-900',
+                          'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-stone-800'
+                        )}
                       >
-                        <div className='flex flex-col gap-2 divide-neutral-700 lg:flex-row'>
-                          {vocations.map((v) => (
-                            <div
-                              className='flex w-16 flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50'
-                              key={v.id}
-                              onClick={() => setVocation(v)}
-                              onKeyDown={() => setVocation(v)}
-                            >
-                              <Image
-                                alt={`${v.label} Icon`}
-                                className='h-[3rem] w-[3rem] rounded-full bg-zinc-700/40 hover:outline hover:outline-2 hover:outline-offset-2 hover:outline-zinc-600'
-                                height={128}
-                                src={
-                                  new URL(
-                                    `https://res.cloudinary.com/dl3asnoii/image/upload/v1710366290/kakele.com.br/icons/${v.id.toLowerCase()}.png`
-                                  ).href
-                                }
-                                width={128}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                </NewHoverTabs>
-              </div>
-              <div className='flex flex-col items-center justify-center'>
-                <span className='text-sm font-semibold'>{t('setCalculator.attributeMenuTitle')}</span>
-                <span className='mb-4 text-sm font-semibold text-zinc-400'>
-                  {t(`kakele.attributes.${attribute.id}`)}
-                </span>
-                <NewHoverTabs
-                  trigger={
-                    <Image
-                      alt='Attribute Icon'
-                      className='h-16 w-16 rounded-full bg-zinc-800 p-2 lg:h-20 lg:w-20'
-                      height={100}
-                      id='attribute-menu'
-                      src={
-                        new URL(
-                          `https://res.cloudinary.com/dl3asnoii/image/upload/v1710366290/kakele.com.br/icons/${attribute.id.toLowerCase()}.png`
-                        ).href
-                      }
-                      width={100}
-                    />
-                  }
-                >
-                  <motion.div
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    className='absolute left-0 top-[calc(100%_+_24px)] z-[999] w-fit rounded-lg border border-zinc-700 bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-800 p-[4px]'
-                    exit={{
-                      opacity: 0,
-                      y: 8,
-                    }}
-                    id='overlay-content'
-                    initial={{
-                      opacity: 0,
-                      y: 8,
-                    }}
-                  >
-                    {/* <Bridge /> */}
-                    {/* <Nub id="attribute-menu" /> */}
-
-                    <div className='w-fit overflow-hidden'>
-                      <motion.div
-                        animate={{ opacity: 1, x: 0 }}
-                        initial={{
-                          opacity: 0,
-                          x: -100,
+                        {v.label}
+                      </span>
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
+              <Popover>
+                <PopoverTrigger className='flex flex-col'>
+                  <span className='text-sm font-semibold'>{t('setCalculator.attributeMenuTitle')}</span>
+                  <span className='mb-4 text-sm font-semibold text-stone-400'>
+                    {t(`kakele.attributes.${attribute.id}`)}
+                  </span>
+                </PopoverTrigger>
+                <PopoverContent className='flex w-fit flex-col items-center justify-center gap-4 bg-stone-950/80 backdrop-blur-md'>
+                  <div className='flex w-full flex-col items-start'>
+                    <span className='text-md'>Attribute</span>
+                    <span className='text-xs'>Select attribute to filter</span>
+                  </div>
+                  <div className='flex w-full flex-wrap items-start gap-2'>
+                    {attributes.map((v: AttributeType, index: number) => (
+                      <span
+                        onClick={() => {
+                          setAttribute(v);
                         }}
-                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        key={v.id}
+                        className={cn(
+                          v.id === attribute.id ? 'bg-stone-800' : 'bg-stone-900',
+                          'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-stone-800'
+                        )}
                       >
-                        <div className='flex flex-col gap-2 divide-neutral-700 lg:flex-row'>
-                          {attributes.map((v) => (
-                            <div
-                              className='flex w-16 flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50'
-                              key={v.id}
-                              onClick={() => setAttribute(v)}
-                              onKeyDown={() => setAttribute(v)}
-                            >
-                              <Image
-                                alt={`${v.label} Icon`}
-                                className='h-[3rem] w-[3rem] rounded-full bg-zinc-700/40 hover:outline hover:outline-2 hover:outline-offset-2 hover:outline-zinc-600'
-                                height={128}
-                                src={
-                                  new URL(
-                                    `https://res.cloudinary.com/dl3asnoii/image/upload/v1710366290/kakele.com.br/icons/${v.id}.png`
-                                  ).href
-                                }
-                                width={128}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                </NewHoverTabs>
-              </div>
-              <div className='flex flex-col items-center justify-center'>
-                <span className='text-sm font-semibold'>{t('setCalculator.elementMenuTitle')}</span>
-                <span className='mb-4 text-sm font-semibold text-zinc-400'>{t(`kakele.energy.${element.id}`)}</span>
-                <NewHoverTabs
-                  trigger={
-                    <Image
-                      alt='Element Icon'
-                      className='h-16 w-16 rounded-full bg-zinc-800 p-4 lg:h-20 lg:w-20'
-                      height={100}
-                      id='element-menu'
-                      src={
-                        new URL(
-                          `https://res.cloudinary.com/dl3asnoii/image/upload/v1710366290/kakele.com.br/icons/${
-                            element.id === 'All' ? 'all-energy' : element.id.toLowerCase()
-                          }.png`
-                        ).href
-                      }
-                      width={100}
-                    />
-                  }
-                >
-                  <motion.div
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    className='absolute left-0 top-[calc(100%_+_24px)] z-[999] w-fit rounded-lg border border-zinc-700 bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-800 p-[4px]'
-                    exit={{
-                      opacity: 0,
-                      y: 8,
-                    }}
-                    id='overlay-content'
-                    initial={{
-                      opacity: 0,
-                      y: 8,
-                    }}
-                  >
-                    {/* <Bridge /> */}
-                    {/* <Nub id="element-menu" /> */}
-
-                    <div className='w-fit overflow-hidden'>
-                      <motion.div
-                        animate={{ opacity: 1, x: 0 }}
-                        initial={{
-                          opacity: 0,
-                          x: -100,
+                        {v.label}
+                      </span>
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
+              <Popover>
+                <PopoverTrigger className='flex flex-col'>
+                  <span className='text-sm font-semibold'>{t('setCalculator.elementMenuTitle')}</span>
+                  <span className='mb-4 text-sm font-semibold text-stone-400'>{t(`kakele.energy.${element.id}`)}</span>
+                </PopoverTrigger>
+                <PopoverContent className='flex w-fit flex-col items-center justify-center gap-4 bg-stone-950/80 backdrop-blur-md'>
+                  <div className='flex w-full flex-col items-start'>
+                    <span className='text-md'>Energy</span>
+                    <span className='text-xs'>Select energy to filter</span>
+                  </div>
+                  <div className='flex w-full flex-wrap items-start gap-2'>
+                    {elements.map((v: ElementType, index: number) => (
+                      <span
+                        onClick={() => {
+                          setElement(v);
                         }}
-                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        key={v.id}
+                        className={cn(
+                          v.id === element.id ? 'bg-stone-800' : 'bg-stone-900',
+                          'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-stone-800'
+                        )}
                       >
-                        <div className='flex flex-col gap-2 divide-neutral-700 lg:flex-row'>
-                          {elements.map((v) => (
-                            <div
-                              className='flex w-16 flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50'
-                              key={v.id}
-                              onClick={() => setElement(v)}
-                              onKeyDown={() => setElement(v)}
-                            >
-                              <Image
-                                alt={`${v.label} Icon`}
-                                className='h-[3rem] w-[3rem] rounded-full bg-zinc-700/40 p-2 hover:outline hover:outline-2 hover:outline-offset-2 hover:outline-zinc-600'
-                                height={128}
-                                src={
-                                  new URL(
-                                    `https://res.cloudinary.com/dl3asnoii/image/upload/v1710366290/kakele.com.br/icons/${
-                                      v.id === 'All' ? 'all-energy' : v.id.toLowerCase()
-                                    }.png`
-                                  ).href
-                                }
-                                width={128}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                </NewHoverTabs>
-              </div>
+                        {v.label}
+                      </span>
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
             <div>
               <Toggle aria-label='Toggle italic' onPressedChange={() => setIncludeExpensive(!includeExpensive)}>
@@ -560,7 +413,7 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
           </motion.div>
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className='flex w-full flex-col gap-4 rounded-lg border-[1px] border-zinc-800 bg-zinc-900 p-4'
+            className='flex w-full flex-col gap-4 rounded-lg border-[1px] border-stone-800 bg-stone-900 p-4'
             exit={{ opacity: 0, y: 30 }}
             initial={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -571,7 +424,7 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
             </div>
             <div className='flex h-fit min-h-[10rem] w-full flex-col'>
               {Object.keys(result || {}).length > 0 && result ? (
-                <div className='flex flex-col flex-wrap gap-2'>
+                <div className='flex flex-col flex-wrap gap-3'>
                   {[
                     'Necklace',
                     'Helmet',
@@ -588,59 +441,57 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
                     return r ? (
                       <motion.div
                         animate={{ opacity: 1, y: 0 }}
-                        className='relative flex h-fit flex-row items-center rounded-md border-[1px] border-zinc-700 bg-zinc-800 p-2 drop-shadow-md hover:border-zinc-500 hover:bg-zinc-700/60'
+                        className='relative flex h-fit flex-row items-center rounded-md border-[1px] border-stone-700 bg-stone-800 p-2 drop-shadow-md transition-all hover:bg-stone-700/60'
                         exit={{ opacity: 0, y: 50 }}
                         initial={{ opacity: 0, y: 50 }}
                         key={`${index}-${r}`}
                         transition={{ duration: 0.5, ease: 'easeOut' }}
-                        whileHover={{ scale: 1.03 }}
                       >
                         <div
-                          className='absolute right-0 top-0 m-2 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full hover:bg-red-700'
+                          className='absolute -right-2 m-2 flex h-full w-8 cursor-pointer items-center justify-center rounded-md hover:bg-red-700/50'
                           onClick={() => setIgnore([...ignore, r.id])}
                           onKeyDown={() => setIgnore([...ignore, r.id])}
                         >
                           <X size={16} />
                         </div>
-                        <div className='absolute -top-3 left-1 m-2 flex h-4 w-fit items-center justify-center gap-2'>
-                          <span className='rounded-full border-[1px] border-zinc-600 bg-zinc-700 px-4 text-xs'>
+                        <div className='absolute -top-4 left-1 m-2 flex h-4 w-fit flex-row items-start justify-start gap-2 text-nowrap'>
+                          <div
+                            className={cn(
+                              elements.find((y) => y.id === r.energy)?.bgColor,
+                              'h-4 w-4 rounded-full drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)]'
+                            )}
+                          />
+                          <span className='flex items-center justify-center rounded-full h-4 border-[1px] border-stone-600 bg-stone-700  px-4 text-[0.6rem] drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)]'>
                             {t(`kakele.itemTypes.${r.slot.replace(/ /g, '')}`)}
                           </span>
                           {r.expensive && (
-                            <svg
-                              className='lucide lucide-circle-alert rounded-full bg-black/50'
-                              fill='none'
-                              height='20'
-                              stroke='#bb2000'
-                              stroke-linecap='round'
-                              stroke-linejoin='round'
-                              stroke-width='2'
-                              viewBox='0 0 24 24'
-                              width='20'
-                            >
-                              <title>Circle Alert</title>
-                              <circle cx='12' cy='12' r='10' />
-                              <line x1='12' x2='12' y1='8' y2='12' />
-                              <line x1='12' x2='12.01' y1='16' y2='16' />
-                            </svg>
+                            <span className='flex h-4 items-center justify-center rounded-full border-[1px] border-stone-600 bg-stone-700 px-4 text-[0.6rem] drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)]'>
+                              <DollarSign size={12} color='#e1e273' />
+                            </span>
                           )}
                         </div>
                         <Image
                           alt={r.name}
-                          className='h-12 w-12'
-                          height={64}
+                          className='h-12 w-12 p-1'
+                          height={256}
+                          width={256}
                           src={
                             new URL(
-                              `https://res.cloudinary.com/dl3asnoii/image/upload/v1713726404/sprites/items/${r.name}.png`
+                              `https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/${r.name.replaceAll("'", '')}.png`
                             ).href
                           }
-                          width={64}
                         />
-                        <div className='ml-4 flex flex-col gap-1'>
+                        <div className='ml-4 flex flex-col gap-1 text-start'>
                           <span className='lg:text-md text-xs font-semibold'>
                             {/* 
 														//@ts-ignore */}
                             {r[`language.${lng}`]}
+                          </span>
+                          <span className='text-[0.6rem]'>
+                            {t(`kakele.attributes.${attribute.id}`)}{' '}
+                            {/* 
+														//@ts-ignore */}
+                            {r.stats[attribute.id]}
                           </span>
                         </div>
                       </motion.div>
@@ -673,7 +524,7 @@ const ItemsInventory = forwardRef(
         <div className='grid grid-cols-3 gap-1'>
           {Array.from(Array(9)).map((_, index) => (
             <motion.div
-              className='flex h-20 w-20 items-center justify-center rounded-md border-[1px] border-white/10 bg-zinc-800 hover:bg-zinc-700 lg:h-16 lg:w-16'
+              className='flex h-20 w-20 items-center justify-center rounded-md border-[1px] border-white/10 bg-stone-800 hover:bg-stone-700 lg:h-16 lg:w-16'
               key={index}
               onClick={() => {
                 setIsItemModalOpen(true);
@@ -684,13 +535,14 @@ const ItemsInventory = forwardRef(
               {items[index] && (
                 <Image
                   alt={items[index]?.name || 'Item'}
-                  height={64}
+                  className='p-1'
+                  height={256}
+                  width={256}
                   src={
                     new URL(
-                      `https://res.cloudinary.com/dl3asnoii/image/upload/v1713726404/sprites/items/${items[index]?.name}.png`
+                      `https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/${items[index]?.name.replaceAll("'", '')}.png`
                     ).href
                   }
-                  width={64}
                 />
               )}
             </motion.div>
@@ -705,15 +557,15 @@ const ItemsInventorySkeleton = forwardRef(() => {
   return (
     <div className='flex items-center justify-center'>
       <div className='grid grid-cols-3 gap-1'>
-        <div className='h-20 w-20 rounded-md bg-zinc-800 lg:h-16 lg:w-16' />
-        <div className='h-20 w-20 rounded-md bg-zinc-800 lg:h-16 lg:w-16' />
-        <div className='h-20 w-20 rounded-md bg-zinc-800 lg:h-16 lg:w-16' />
-        <div className='h-20 w-20 rounded-md bg-zinc-800 lg:h-16 lg:w-16' />
-        <div className='h-20 w-20 rounded-md bg-zinc-800 lg:h-16 lg:w-16' />
-        <div className='h-20 w-20 rounded-md bg-zinc-800 lg:h-16 lg:w-16' />
-        <div className='h-20 w-20 rounded-md bg-zinc-800 lg:h-16 lg:w-16' />
-        <div className='h-20 w-20 rounded-md bg-zinc-800 lg:h-16 lg:w-16' />
-        <div className='h-20 w-20 rounded-md bg-zinc-800 lg:h-16 lg:w-16' />
+        <div className='h-20 w-20 rounded-md bg-stone-800 lg:h-16 lg:w-16' />
+        <div className='h-20 w-20 rounded-md bg-stone-800 lg:h-16 lg:w-16' />
+        <div className='h-20 w-20 rounded-md bg-stone-800 lg:h-16 lg:w-16' />
+        <div className='h-20 w-20 rounded-md bg-stone-800 lg:h-16 lg:w-16' />
+        <div className='h-20 w-20 rounded-md bg-stone-800 lg:h-16 lg:w-16' />
+        <div className='h-20 w-20 rounded-md bg-stone-800 lg:h-16 lg:w-16' />
+        <div className='h-20 w-20 rounded-md bg-stone-800 lg:h-16 lg:w-16' />
+        <div className='h-20 w-20 rounded-md bg-stone-800 lg:h-16 lg:w-16' />
+        <div className='h-20 w-20 rounded-md bg-stone-800 lg:h-16 lg:w-16' />
       </div>
     </div>
   );

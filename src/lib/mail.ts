@@ -13,9 +13,9 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   </div>`;
 
   await resend.emails.send({
-    from: 'noreply@fpresa.org',
+    from: 'Kakele Wiki <send@kakele.com.br>',
     to: email,
-    subject: 'Next-auth Example || 2FA Code',
+    subject: 'Kakele Wiki > 2FA Code',
     html: htmlContent,
   });
 };
@@ -32,11 +32,12 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
   </div>`;
 
   await resend.emails.send({
-    from: 'noreply@fpresa.org',
+    from: 'Kakele Wiki <send@kakele.com.br>',
     to: email,
-    subject: 'Next-auth Example || Reset your password',
+    subject: 'Kakele Wiki > Reset your password',
     html: htmlContent,
   });
+  // .then((x) => console.log(x));
 };
 
 export const sendVerificationEmail = async (email: string, token: string) => {
@@ -51,9 +52,9 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   </div>`;
 
   await resend.emails.send({
-    from: 'noreply@fpresa.org',
+    from: 'Kakele Wiki <send@kakele.com.br>',
     to: email,
-    subject: 'Next-auth Example || Please confirm your email',
+    subject: 'Kakele Wiki > Confirm your email',
     html: htmlContent,
   });
 };

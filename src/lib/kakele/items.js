@@ -3219,7 +3219,6 @@ const items = [
     "id": 145,
     "language.es": "Capa de Vórtice Inestable",
     "slot": "Armor",
-    "expensive": true
   },
   {
     "level": 475,
