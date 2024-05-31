@@ -16,9 +16,9 @@ export default function Card({
     <Halo
       strength={disableHalo ? 0 : 5}
       className={cn(
-        className,
         'h-full w-full overflow-clip rounded-xl border border-stone-800 bg-stone-900 text-sm',
-        noPadding ? 'p-0' : 'p-4 md:p-6'
+        noPadding ? 'p-0' : 'p-4 md:p-6',
+        className,
       )}
     >
       {children}

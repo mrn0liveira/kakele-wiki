@@ -77,6 +77,12 @@ const messages = {
     },
   },
   kakele: {
+    common: {
+      Sources: 'Sources',
+      Monsters: 'Monsters',
+      NPCs: 'NPCs',
+      Quests: 'Quests',
+    },
     energy: {
       Dark: 'Dark',
       Light: 'Light',
@@ -111,6 +117,23 @@ const messages = {
       Legs: 'Legs',
       Tool: 'Tool',
       PrimaryHand: 'Primary Hand',
+      Equipment: 'Equipment',
+      Weapon: 'Weapon',
+      Food: 'Food',
+      Others: 'Others',
+    },
+    itemStats: {
+      Attack: 'Attack',
+      Magic: 'Magic',
+      Armor: 'Armor',
+      magic: 'Magic',
+      armor: 'Armor',
+      value: 'Value',
+      gold: 'Gold',
+      xp: 'XP',
+      level: 'Level',
+      sources: 'Sources',
+      energy: 'Energy',
     },
     rarities: {
       Common: 'Common',

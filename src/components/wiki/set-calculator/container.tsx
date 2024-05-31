@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { DollarSign, X } from 'lucide-react';
+import { DollarSign, Lock, X } from 'lucide-react';
 import Image from 'next/image';
 import { type Dispatch, type SetStateAction, forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -36,6 +36,11 @@ interface VocationType {
 interface AttributeType {
   label: string;
   id: 'attack' | 'magic' | 'armor';
+}
+
+interface LockedItem {
+  slot: string;
+  item: KakeleEquipmentItems | KakeleWeaponItems;
 }
 
 export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
@@ -108,6 +113,8 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
   const [attribute, setAttribute] = useState<AttributeType>(attributes[1]);
   const [ignore, setIgnore] = useState<number[]>([]);
 
+  const [lockedSlots, setLockedSlots] = useState<LockedItem[]>([]);
+
   const [includeExpensive, setIncludeExpensive] = useState(false);
 
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
@@ -139,7 +146,13 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
 
     if (!result) return res;
 
+    for (const item of Object.values(lockedSlots)) {
+      res.push(item.item.energy);
+    }
+
     for (const item of Object.values(result)) {
+      if (lockedSlots.some((l) => l.slot === item.slot)) continue;
+
       res.push(item.energy);
     }
 
@@ -151,6 +164,7 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
   useEffect(() => {
     const items = getBestItemsForLevel({
       level,
+      lockedSlots: lockedSlots,
       includeExpensiveItems: includeExpensive,
       ignore: ignore,
       vocation: vocation.id,
@@ -161,7 +175,7 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
     if (items) {
       setResult(items);
     }
-  }, [level, element, vocation, ignore, attribute, includeExpensive]);
+  }, [level, element, vocation, ignore, attribute, includeExpensive, lockedSlots]);
 
   return (
     <div className='relative flex flex-col items-center justify-center space-y-8 p-8 text-center'>
@@ -214,19 +228,19 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
             </div>
             {Object.keys(result || {}).length > 0 && result ? (
               <ItemsInventory
+                lockedSlots={lockedSlots}
+                setLockedSlots={setLockedSlots}
                 items={{
-                  0: result.necklace || null,
-                  1: result.helmet || null,
-                  2: result.ring || null,
-                  3: result.primary_hand || null,
-                  4: result.armor || null,
-                  5: result.secondary_hand || null,
-                  6: result.tool || null,
-                  7: result.legs || null,
-                  8: result.boots || null,
+                  0: lockedSlots.find((x) => x.slot === 'Necklace')?.item || result.necklace || null,
+                  1: lockedSlots.find((x) => x.slot === 'Helmet')?.item || result.helmet || null,
+                  2: lockedSlots.find((x) => x.slot === 'Ring')?.item || result.ring || null,
+                  3: lockedSlots.find((x) => x.slot === 'Primary Hand')?.item || result.primary_hand || null,
+                  4: lockedSlots.find((x) => x.slot === 'Armor')?.item || result.armor || null,
+                  5: lockedSlots.find((x) => x.slot === 'Secondary Hand')?.item || result.secondary_hand || null,
+                  6: lockedSlots.find((x) => x.slot === 'Tool')?.item || result.tool || null,
+                  7: lockedSlots.find((x) => x.slot === 'Legs')?.item || result.legs || null,
+                  8: lockedSlots.find((x) => x.slot === 'Boots')?.item || result.boots || null,
                 }}
-                setCurrentItem={setCurrentItem}
-                setIsItemModalOpen={setIsItemModalOpen}
               />
             ) : (
               <ItemsInventorySkeleton />
@@ -436,7 +450,10 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
                     'Legs',
                     'Boots',
                   ].map((v, index) => {
-                    const r = result[v.toLowerCase().replace(' ', '_')];
+                    const r =
+                      lockedSlots.find(
+                        (x) => x.slot.toLowerCase().replace(' ', '_') === v.toLowerCase().replace(' ', '_')
+                      )?.item || result[v.toLowerCase().replace(' ', '_')];
 
                     return r ? (
                       <motion.div
@@ -444,12 +461,16 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
                         className='relative flex h-fit flex-row items-center rounded-md border-[1px] border-stone-700 bg-stone-800 p-2 drop-shadow-md transition-all hover:bg-stone-700/60'
                         exit={{ opacity: 0, y: 50 }}
                         initial={{ opacity: 0, y: 50 }}
-                        key={`${index}-${r}`}
+                        key={`${index}-${r.id}`}
                         transition={{ duration: 0.5, ease: 'easeOut' }}
                       >
                         <div
                           className='absolute -right-2 m-2 flex h-full w-8 cursor-pointer items-center justify-center rounded-md hover:bg-red-700/50'
-                          onClick={() => setIgnore([...ignore, r.id])}
+                          onClick={() => {
+                            if (!lockedSlots.some((x) => x.slot === r.slot)) {
+                              setIgnore([...ignore, r.id]);
+                            }
+                          }}
                           onKeyDown={() => setIgnore([...ignore, r.id])}
                         >
                           <X size={16} />
@@ -461,7 +482,7 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
                               'h-4 w-4 rounded-full drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)]'
                             )}
                           />
-                          <span className='flex items-center justify-center rounded-full h-4 border-[1px] border-stone-600 bg-stone-700  px-4 text-[0.6rem] drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)]'>
+                          <span className='flex h-4 items-center justify-center rounded-full border-[1px] border-stone-600 bg-stone-700  px-4 text-[0.6rem] drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)]'>
                             {t(`kakele.itemTypes.${r.slot.replace(/ /g, '')}`)}
                           </span>
                           {r.expensive && (
@@ -470,29 +491,37 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
                             </span>
                           )}
                         </div>
-                        <Image
-                          alt={r.name}
-                          className='h-12 w-12 p-1'
-                          height={256}
-                          width={256}
-                          src={
-                            new URL(
-                              `https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/${r.name.replaceAll("'", '')}.png`
-                            ).href
-                          }
-                        />
-                        <div className='ml-4 flex flex-col gap-1 text-start'>
-                          <span className='lg:text-md text-xs font-semibold'>
-                            {/* 
+                        <div
+                          onClick={() => {
+                            setCurrentItem(r);
+                            setIsItemModalOpen(true);
+                          }}
+                          className='flex h-full w-full cursor-pointer flex-row items-center justify-start'
+                        >
+                          <Image
+                            alt={r.name}
+                            className='h-12 w-12 p-1'
+                            height={256}
+                            width={256}
+                            src={
+                              new URL(
+                                `https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/${r.name.replaceAll("'", '')}.png`
+                              ).href
+                            }
+                          />
+                          <div className='ml-4 flex flex-col gap-1 text-start'>
+                            <span className='lg:text-md text-xs font-semibold'>
+                              {/* 
 														//@ts-ignore */}
-                            {r[`language.${lng}`]}
-                          </span>
-                          <span className='text-[0.6rem]'>
-                            {t(`kakele.attributes.${attribute.id}`)}{' '}
-                            {/* 
+                              {r[`language.${lng}`]}
+                            </span>
+                            <span className='text-[0.6rem]'>
+                              {t(`kakele.attributes.${attribute.id}`)}{' '}
+                              {/* 
 														//@ts-ignore */}
-                            {r.stats[attribute.id]}
-                          </span>
+                              {r.stats[attribute.id]}
+                            </span>
+                          </div>
                         </div>
                       </motion.div>
                     ) : (
@@ -512,28 +541,38 @@ export default function SetCalculatorContainer({ lng = 'en' }: ComponentProps) {
 const ItemsInventory = forwardRef(
   ({
     items,
-    setIsItemModalOpen,
-    setCurrentItem,
+    lockedSlots,
+    setLockedSlots,
   }: {
     items: Record<number, KakeleEquipmentOrWeapon | null>;
-    setCurrentItem: (item: KakeleEquipmentOrWeapon | null) => void;
-    setIsItemModalOpen: Dispatch<SetStateAction<boolean>>;
+    lockedSlots: LockedItem[];
+    setLockedSlots: Dispatch<SetStateAction<LockedItem[]>>;
   }) => {
     return (
       <div className='flex flex-col items-center justify-center'>
         <div className='grid grid-cols-3 gap-1'>
           {Array.from(Array(9)).map((_, index) => (
             <motion.div
-              className='flex h-20 w-20 items-center justify-center rounded-md border-[1px] border-white/10 bg-stone-800 hover:bg-stone-700 lg:h-16 lg:w-16'
+              className={cn(
+                lockedSlots.find((x) => x.slot === items[index]?.slot)
+                  ? 'border-[2px] border-yellow-600/50'
+                  : 'border-[1px] border-white/10',
+                'group/effect relative flex h-20 w-20 items-center justify-center rounded-md bg-stone-800 transition-all lg:h-16 lg:w-16'
+              )}
               key={index}
-              onClick={() => {
-                setIsItemModalOpen(true);
-                setCurrentItem(items[index]);
-              }}
-              whileHover={{ scale: 1.05 }}
             >
               {items[index] && (
                 <Image
+                  onClick={() => {
+                    if (lockedSlots.find((x) => x.slot === items[index]?.slot)) {
+                      setLockedSlots(lockedSlots.filter((x) => x.slot !== items[index]?.slot));
+                    } else {
+                      setLockedSlots([
+                        ...lockedSlots,
+                        { slot: items[index]?.slot as string, item: items[index] as KakeleEquipmentOrWeapon },
+                      ]);
+                    }
+                  }}
                   alt={items[index]?.name || 'Item'}
                   className='p-1'
                   height={256}

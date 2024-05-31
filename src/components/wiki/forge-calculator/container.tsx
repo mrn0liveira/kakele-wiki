@@ -152,14 +152,14 @@ export default function ForgeCalculatorContainer({ lng }: { lng: string }) {
                             )}
                           <div
                             className={cn(
-                              'delay-[10] group/effect flex items-center justify-center rounded-lg border-[1px] border-stone-950 border-t-white/10 bg-stone-900 drop-shadow-md transition-all hover:bg-stone-800/80'
+                              'delay-75 group/effect flex items-center justify-center rounded-lg border-[1px] border-stone-950 border-t-white/10 bg-stone-900 drop-shadow-md transition-all hover:bg-stone-800/80'
                             )}
                           >
                             <Image
                               src={`https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/${
                                 resourcesData[key as keyof typeof resourcesData].image
                               }.png`}
-                              className='delay-[50] w-32 transition-all group-hover/effect:scale-110 group-hover/effect:drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]'
+                              className='delay-70 w-32 transition-all group-hover/effect:scale-110 group-hover/effect:drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]'
                               alt={key}
                               width={256}
                               height={256}

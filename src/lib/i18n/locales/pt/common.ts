@@ -77,6 +77,12 @@ const messages = {
     },
   },
   kakele: {
+    common: {
+      Sources: 'Fontes',
+      Monsters: 'Monstros',
+      NPCs: 'NPCs',
+      Quests: 'Missões',
+    },
     energy: {
       Dark: 'Trevas',
       Light: 'Luz',
@@ -111,6 +117,23 @@ const messages = {
       Legs: 'Pernas',
       Tool: 'Ferramenta',
       PrimaryHand: 'Mão Primária',
+      Equipment: 'Equipamento',
+      Weapon: 'Arma',
+      Food: 'Comida',
+      Others: 'Outros',
+    },
+    itemStats: {
+      Attack: 'Ataque',
+      Magic: 'Magia',
+      Armor: 'Armadura',
+      magic: 'Magia',
+      armor: 'Armadura',
+      value: 'Valor',
+      gold: 'Ouro',
+      xp: 'XP',
+      level: 'Nível',
+      sources: 'Fontes',
+      energy: 'Energia',
     },
     rarities: {
       Common: 'Comum',
@@ -120,6 +143,7 @@ const messages = {
       Relic: 'Relíquia',
     },
   },
+
   blessCalculator: {
     title: 'Calculadora de Benção',
     description: 'Calcule a quantidade de recursos necessários para abençoar seus itens.',

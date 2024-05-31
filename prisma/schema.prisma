@@ -59,6 +59,28 @@ model User {
   blog                  Blog[]
   MapPoint              MapPoint[]
   typeInterest          TypeInterest?
+  subscriptions         UserSubscription[]
+}
+
+model Subscription {
+  id    String             @id @default(cuid())
+  name  String
+  price Float
+  users UserSubscription[]
+}
+
+model UserSubscription {
+  id             String       @id @default(cuid())
+  user           User         @relation(fields: [userId], references: [id])
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  startDate      DateTime     @default(now())
+  expirationDate DateTime
+  isActive       Boolean      @default(true)
+
+  userId         String
+  subscriptionId String
+
+  @@unique([userId, subscriptionId])
 }
 
 model Blog {

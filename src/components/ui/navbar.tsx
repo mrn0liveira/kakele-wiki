@@ -189,7 +189,7 @@ export const Navbar = () => {
                           <Link className='w-full h-full' href={item.href} key={item.id}>
                             <Card
                               noPadding
-                              className='flex h-full w-full flex-col items-center justify-center bg-red-900 p-1'
+                              className='flex h-full w-full flex-col items-center justify-center p-1'
                             >
                               <span className='text-md ml-2'>{t(`navbar.tools.${item.id}`)}</span>
                             </Card>

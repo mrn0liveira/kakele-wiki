@@ -71,14 +71,14 @@ export default function AdModal({
 								className="relative flex max-w-[90vw] flex-col items-center justify-center gap-4 overflow-hidden rounded-3xl border-[2px] border-white/20 bg-cover bg-center p-4 px-8 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] transition-all lg:flex-row"
 								style={{
 									backgroundImage:
-										"url(https://res.cloudinary.com/dl3asnoii/image/upload/v1713295880/kakele.com.br/p7o8ia23c4pdkhstq5uu.jpg)",
+										"url(https://res.cloudinary.com/dbkrvt2x0/image/upload/v1715882864/kakele-wiki/background/fmjsfk5yb2ush4si68b6.jpg)",
 								}}
 							>
 								<Image
 									alt="Coinshub"
 									className="z-50 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] transition-all"
 									height={100}
-									src="https://res.cloudinary.com/dl3asnoii/image/upload/v1709235385/kakele.com.br/home/shop.png"
+									src="https://res.cloudinary.com/dbkrvt2x0/image/upload/v1716930792/kakele-wiki/icons/shop.png"
 									width={100}
 								/>
 								<div
@@ -109,8 +109,8 @@ export default function AdModal({
 							}}
 						>
 							<Frown
-								className="relative -left-8 rounded-full border-[1px] border-white/20 bg-red-900 p-[2px]"
-								size={32}
+								className="relative -left-12 rounded-full border-[1px] border-white/20 bg-red-900 p-[2px]"
+								size={24}
 							/>
 							{text3}
 						</span>
