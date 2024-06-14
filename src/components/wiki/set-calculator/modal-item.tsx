@@ -103,7 +103,7 @@ export const KakeleItemModal = ({
                 ease: 'easeInOut',
               }}
             >
-              <div className='relative max-w-[90vw] flex h-full w-full flex-col items-center justify-center gap-2 rounded-md p-2 px-8'>
+              <div className='relative flex h-full w-full max-w-[90vw] flex-col items-center justify-center gap-2 rounded-md p-2 px-8'>
                 <div className='-top-48 w-fit text-nowrap text-center text-3xl font-bold'>
                   <span className='text-xs font-bold'>
                     {item.energy && (
@@ -112,7 +112,7 @@ export const KakeleItemModal = ({
                     <span className={cn(getRarityTextColor(item.rarity))}>{t(`kakele.rarities.${item.rarity}`)}</span>{' '}
                     <span>{t(`kakele.itemTypes.${item.type}`)}</span>
                   </span>
-                  <h3 className='text-md text-center text-wrap font-bold lg:text-lg'>
+                  <h3 className='text-md text-wrap text-center font-bold lg:text-lg'>
                     {item[`language.${lng}` as keyof typeof item]}
                   </h3>
                 </div>

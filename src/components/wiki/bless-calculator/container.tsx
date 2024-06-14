@@ -11,7 +11,7 @@ import { cn } from '@/src/lib/utils';
 import kakeleItems from '@/public/kakele-data/items.js';
 
 import SearchBar from './search-bar';
-import BlessPicker from './rating';
+import RangeBlessPicker from './rating';
 import type { Option } from './dropdown';
 
 import { BlessPercentages } from '@/src/lib/constants';
@@ -179,13 +179,8 @@ export default function BlessCalculatorContainer({ lng = 'en' }: { lng: string }
   }, [queryItem]);
 
   return (
-    <div className='relative flex min-h-lvh flex-col items-center justify-center space-y-8 p-8 text-center'>
-      <div
-        className='absolute top-0 flex w-full items-center justify-center'
-        style={{
-          background: 'linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(20, 17, 15, 1) 100%)',
-        }}
-      >
+    <div className='flex w-full flex-col items-center justify-start space-y-8 p-8 text-center'>
+      <div className='top-0 flex w-full items-center justify-center'>
         <div className='flex h-auto w-[40rem] flex-col items-center justify-center'>
           <h2 className='mt-4 text-2xl font-bold'>{t('blessCalculator.searchTitle')}</h2>
           <SearchBar
@@ -201,12 +196,6 @@ export default function BlessCalculatorContainer({ lng = 'en' }: { lng: string }
           />
         </div>
       </div>
-      <div
-        className='absolute bottom-0 flex h-[10rem] w-full items-center justify-center'
-        style={{
-          background: 'linear-gradient(to top, rgba(20, 17, 15, 1) 0%, rgba(0, 0, 0, 0) 100%)',
-        }}
-      />
       {item ? (
         <BlessItemContainer>
           <div className='flex h-full w-[18rem] flex-col justify-center gap-2'>
@@ -224,23 +213,14 @@ export default function BlessCalculatorContainer({ lng = 'en' }: { lng: string }
               t={t}
               valueText={t('blessCalculator.value')}
             />
-            <div className='relative flex h-fit w-[18rem] flex-col items-start justify-center rounded-xl border-[1px] border-stone-800 bg-stone-900 p-4 md:hidden'>
-              {warnMessage &&
-                [
-                  'blessError.initialValueGreaterThanFinalValue',
-                  'blessError.initialAndFinalValuesMustBeNumbers',
-                ].includes(warnMessage?.id) && (
-                  <div className='absolute -top-4 left-2 flex rounded-lg border-[1px] border-red-600 bg-red-700 p-[2px] px-4 text-xs'>
-                    {warnMessage.message}
-                  </div>
-                )}
+            <div className='relative flex h-fit w-[18rem] flex-col items-start justify-center rounded-xl border-[1px] border-border/50 bg-card p-4 md:hidden'>
               <div className='items-cenre flex flex-col text-start'>
                 <h2 className='text-xl font-bold'>{t('blessCalculator.optionsTitle')}</h2>
                 <span className='text-sm'>{t('blessCalculator.optionsDescription')}</span>
               </div>
               <div className='flex flex-col text-sm'>
                 <span className='my-4'>{t('blessCalculator.blessRange')}</span>
-                <BlessPicker
+                <RangeBlessPicker
                   disabledValues={Array.from({ length: 11 }, (_, index) => index).map((index) => {
                     if (index >= finalValue) return index;
                   })}
@@ -251,7 +231,7 @@ export default function BlessCalculatorContainer({ lng = 'en' }: { lng: string }
                   topText='Initial Bless'
                   value={initialValue}
                 />
-                <BlessPicker
+                <RangeBlessPicker
                   disabledValues={Array.from({ length: 11 }, (_, index) => index).map((index) => {
                     if (index <= initialValue) return index;
                   })}
@@ -327,15 +307,24 @@ export default function BlessCalculatorContainer({ lng = 'en' }: { lng: string }
           </div>
           <div className='relative mt-8 flex h-fit flex-col items-center justify-center gap-2 md:mt-0'>
             <BlessItemInfoGold text={t('blessCalculator.blessGold')} value={gold} />
-            <div className='relative h-fit w-[18rem] rounded-xl border-[1px] border-stone-700 bg-stone-800 p-4 md:w-[22rem]'>
+            <div className='relative h-fit w-[18rem] rounded-xl border-[1px] border-accent/50 bg-primary/20 p-4 md:w-[22rem]'>
               {warnMessage && ['blessError.noItems'].includes(warnMessage?.id) && (
-                <div className='absolute -top-4 left-2 flex rounded-lg border-[1px] border-red-600 bg-red-700 p-[2px] px-4 text-xs'>
+                <div className='absolute top-2 flex rounded-lg border-[1px] border-red-600 bg-destructive/40 p-[2px] px-4 text-center text-xs'>
                   {warnMessage.message}
                 </div>
               )}
-              <div className='mb-4 flex flex-col items-start text-start'>
+              <div className='mb-4 mt-4 flex flex-col items-start text-start'>
                 <h2 className='text-xl font-bold'>{t('blessCalculator.requiredItemsTitle')}</h2>
                 <span className='text-sm'>{t('blessCalculator.requiredItemsDescription')}</span>
+                {warnMessage &&
+                  [
+                    'blessError.initialValueGreaterThanFinalValue',
+                    'blessError.initialAndFinalValuesMustBeNumbers',
+                  ].includes(warnMessage?.id) && (
+                    <div className='absolute top-0 flex rounded-lg border-[1px] border-red-600 bg-destructive/40 p-[2px] px-4 text-xs'>
+                      {warnMessage.message}
+                    </div>
+                  )}
               </div>
 
               {blessItems && (
@@ -345,7 +334,7 @@ export default function BlessCalculatorContainer({ lng = 'en' }: { lng: string }
                       return (
                         <motion.div
                           animate={{ opacity: 1, y: 0 }}
-                          className='relative flex flex-row items-center rounded-md border-[1px] border-stone-600 bg-stone-700 p-2 drop-shadow-md hover:border-stone-400'
+                          className='relative flex flex-row items-center rounded-md border-[1px] border-accent/50 bg-secondary/30 p-2 drop-shadow-md hover:border-accent'
                           exit={{ opacity: 0, y: 30 }}
                           initial={{ opacity: 0, y: 30 }}
                           key={`${index}${item.id}`}
@@ -370,7 +359,7 @@ export default function BlessCalculatorContainer({ lng = 'en' }: { lng: string }
                             </span>
                           </div>
                           <div
-                            className='absolute right-0 top-0 m-2 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full hover:bg-red-700'
+                            className='absolute right-0 top-0 m-2 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full hover:bg-destructive/40'
                             onClick={() => {
                               setQueryIgnore([...ignoredItems, item.id.toString()]);
                               setIgnoredItems([...ignoredItems, item.id.toString()]);
@@ -391,13 +380,13 @@ export default function BlessCalculatorContainer({ lng = 'en' }: { lng: string }
             </div>
           </div>
           <div className='flex flex-col gap-4'>
-            <div className='relative hidden h-fit w-[18rem] flex-col items-center justify-center rounded-xl border-[1px] border-stone-800 bg-stone-900 p-4 md:flex'>
+            <div className='relative hidden h-fit w-[18rem] flex-col items-center justify-center rounded-xl border-[1px] border-accent/50 bg-primary/20 p-4 md:flex'>
               {warnMessage &&
                 [
                   'blessError.initialValueGreaterThanFinalValue',
                   'blessError.initialAndFinalValuesMustBeNumbers',
                 ].includes(warnMessage?.id) && (
-                  <div className='absolute -top-4 left-2 flex rounded-lg border-[1px] border-red-600 bg-red-700 p-[2px] px-4 text-xs'>
+                  <div className='absolute -top-4 left-2 flex rounded-lg border-[1px] border-red-600 bg-destructive/40 p-[2px] px-4 text-xs'>
                     {warnMessage.message}
                   </div>
                 )}
@@ -407,7 +396,7 @@ export default function BlessCalculatorContainer({ lng = 'en' }: { lng: string }
               </div>
               <div className='mt-4 flex flex-col gap-2 text-sm'>
                 <span>{t('blessCalculator.blessRange')}</span>
-                <BlessPicker
+                <RangeBlessPicker
                   disabledValues={Array.from({ length: 11 }, (_, index) => index).map((index) => {
                     if (index >= finalValue) return index;
                   })}
@@ -418,7 +407,7 @@ export default function BlessCalculatorContainer({ lng = 'en' }: { lng: string }
                   topText='Initial Bless'
                   value={initialValue}
                 />
-                <BlessPicker
+                <RangeBlessPicker
                   disabledValues={Array.from({ length: 11 }, (_, index) => index).map((index) => {
                     if (index <= initialValue) return index;
                   })}
@@ -494,7 +483,7 @@ const BlessItemHeader = React.forwardRef(
     blessValue: number;
   }) => {
     return (
-      <div className='card-shine-effect-2 border-stone flex w-full flex-col items-center justify-center rounded-lg border-[1px] border-stone-800/70 bg-stone-900 p-4'>
+      <div className='card-shine-effect-2 flex w-full flex-col items-center justify-center rounded-lg border-[1px] border-border/50 bg-primary/30 p-4'>
         <span className='text-xs'>
           <span className={cn(getItemRarityColor(item.rarity), 'font-black')}>{rarityName}</span> {itemType}
         </span>
@@ -537,23 +526,23 @@ const BlessItemInfo = React.forwardRef(
     t: (key: string) => string;
   }) => {
     return (
-      <div className='w-full rounded-xl border-[1px] border-stone-700 bg-stone-800'>
+      <div className='w-full rounded-xl border-[1px] border-border/50 bg-primary/20'>
         {item.level && (
           <div className='flex flex-row items-center justify-between space-x-12 p-2 text-xs'>
-            <h3 className='font-bold text-stone-400'>{levelText}</h3>
-            <h4 className='rounded-md bg-stone-900/70 p-[2px] px-4'>{Intl.NumberFormat().format(item.level)}</h4>
+            <h3 className='font-bold text-primary-foreground/60'>{levelText}</h3>
+            <h4 className='rounded-md bg-black/20 p-[2px] px-4'>{Intl.NumberFormat().format(item.level)}</h4>
           </div>
         )}
         {item.value && (
           <div className='flex flex-row items-center justify-between space-x-12 p-2 text-xs'>
-            <h3 className='font-bold text-stone-400'>{valueText}</h3>
-            <h4 className='rounded-md bg-stone-900/70 p-[2px] px-4'>{Intl.NumberFormat().format(item.value)}</h4>
+            <h3 className='font-bold text-primary-foreground/60'>{valueText}</h3>
+            <h4 className='rounded-md bg-black/20 p-[2px] px-4'>{Intl.NumberFormat().format(item.value)}</h4>
           </div>
         )}
         {item.energy && (
           <div className='flex flex-row items-center justify-between space-x-12 p-2 text-xs'>
-            <h3 className='font-bold text-stone-400'>{energyText}</h3>
-            <h4 className='rounded-md bg-stone-900/70 p-[2px] px-4'>{t(`kakele.energy.${item.energy}`)}</h4>
+            <h3 className='font-bold text-primary-foreground/60'>{energyText}</h3>
+            <h4 className='rounded-md bg-black/20 p-[2px] px-4'>{t(`kakele.energy.${item.energy}`)}</h4>
           </div>
         )}
       </div>
@@ -564,17 +553,17 @@ const BlessItemInfo = React.forwardRef(
 const BlessItemInfoGold = React.forwardRef(({ value, text }: { value: number; text: string }) => {
   return (
     <div className='relative flex w-full flex-row items-center justify-start gap-8 rounded-lg border-[1px] border-yellow-700 bg-yellow-800 font-bold'>
-      <Image
+      {/* <Image
         alt='Gold Icon'
         className='h-8 w-8 rounded-lg bg-yellow-500/70'
         height={128}
         src='https://res.cloudinary.com/dl3asnoii/image/upload/v1709425094/kakele.com.br/icons/gold.png'
         width={128}
-      />
+      /> */}
       <span className='absolute -top-6 left-2 rounded-md border-[1px] border-yellow-600 bg-yellow-700 px-4 text-xs text-yellow-400'>
         {text}
       </span>
-      <span className=''>{Intl.NumberFormat().format(value)}</span>
+      <span className='ml-4'>{Intl.NumberFormat().format(value)}</span>
     </div>
   );
 });
@@ -608,15 +597,21 @@ const BlessItemStats = React.forwardRef(
         <div className='flex flex-col gap-1'>
           <div className='flex flex-row gap-2'>
             <div className='flex flex-row'>
-              <Image alt={`${label} Icon`} className='h-8 w-8 bg-red-950' height={128} src={imageUrl} width={128} />
+              <Image
+                alt={`${label} Icon`}
+                className='h-8 w-8 bg-destructive/50'
+                height={128}
+                src={imageUrl}
+                width={128}
+              />
             </div>
-            <div className='flex w-full flex-row items-center justify-between rounded-xl border-[1px] border-red-900/50 bg-red-950 px-4'>
+            <div className='flex w-full flex-row items-center justify-between rounded-xl border-[1px] border-red-900/50 bg-destructive/50 px-4'>
               <div>
                 <span className='text-xs font-bold'>{label}</span>
               </div>
               <div className='flex flex-row items-center gap-2'>
                 <div
-                  className='cursor-pointer rounded-md bg-red-800 p-[1px] px-2 text-center text-xs drop-shadow-md'
+                  className='cursor-pointer rounded-md bg-destructive/30 p-[1px] px-2 text-center text-xs drop-shadow-md'
                   onClick={() => (itemStat <= 0 ? setItemStat(0) : setItemStat(itemStat - 5))}
                   onKeyDown={(e) => {
                     itemStat <= 0 ? setItemStat(0) : setItemStat(itemStat - 5);
@@ -625,7 +620,7 @@ const BlessItemStats = React.forwardRef(
                   -
                 </div>
                 <div
-                  className='cursor-pointer rounded-md bg-red-800 p-[1px] px-2 text-center text-xs drop-shadow-md'
+                  className='cursor-pointer rounded-md bg-destructive/30 p-[1px] px-2 text-center text-xs drop-shadow-md'
                   onClick={() => (itemStat >= 100 ? setItemStat(100) : setItemStat(itemStat + 5))}
                   onKeyDown={() => {
                     itemStat >= 100 ? setItemStat(100) : setItemStat(itemStat + 5);
@@ -637,7 +632,7 @@ const BlessItemStats = React.forwardRef(
             </div>
           </div>
           <div className='ml-8 flex flex-col items-start text-sm'>
-            <span className='flex flex-row items-center gap-2 text-xs text-stone-300'>
+            <span className='flex flex-row items-center gap-2 text-xs text-primary-foreground/60'>
               {value < 0 && <AlertTriangle color='yellow' size={12} />}
               {itemBonusText} {Intl.NumberFormat().format(value)}
             </span>
@@ -647,7 +642,7 @@ const BlessItemStats = React.forwardRef(
             <span className='text-xs text-yellow-500'>
               {blessBonusText} {Intl.NumberFormat().format(blessBonus)}
             </span>
-            <span className='mt-2 rounded-md bg-stone-950 p-[2px] px-2 text-xs text-orange-500'>
+            <span className='mt-2 rounded-md bg-primary/30 p-[2px] px-2 text-xs text-orange-500'>
               {totalBonusText}{' '}
               <span className='font-bold'>
                 {Intl.NumberFormat().format((value < 0 ? 0 : value) + itemStat + blessBonus)}

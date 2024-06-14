@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -27,7 +27,9 @@ export default function HeroTrailer({ ad, mobileAd, subhead }: ComponentProps) {
 				Your browser does not support the video tag.
 			</video> */}
       <Image
-        src={'https://res.cloudinary.com/dbkrvt2x0/image/upload/v1716562658/kakele-wiki/background/bp4ccagntursoolkhkzi.png'}
+        src={
+          'https://res.cloudinary.com/dbkrvt2x0/image/upload/v1717532950/kakele-wiki/background/ecxzxywjn2q0rbvflanc.png'
+        }
         alt='Kakele Background'
         className='absolute top-0 h-full max-h-[800px] w-full max-w-[1400px] object-cover'
         height={800}
@@ -85,10 +87,11 @@ export default function HeroTrailer({ ad, mobileAd, subhead }: ComponentProps) {
         </div>
       </motion.div>
 
+      {/* Componente JSX */}
       <div
         className='absolute top-0 h-full max-h-[800px] w-full max-w-[1400px] object-cover'
         style={{
-          background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(20, 17, 15, 1) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, var(--background) 100%)',
         }}
       />
     </motion.div>

@@ -69,7 +69,6 @@ export const generateVerificationToken = async (email: string, request_email_cha
       email,
       token,
       expires,
-      request_email_change_by,
     },
   });
 

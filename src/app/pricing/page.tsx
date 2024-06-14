@@ -3,6 +3,7 @@
 import { Card, CardContent } from '@/src/components/ui/card';
 import { Button } from '@/src/components/ui/button';
 import { Divider } from '@nextui-org/react';
+import Image from 'next/image';
 
 export default function Component() {
   return (
@@ -16,21 +17,23 @@ export default function Component() {
               </h1>
               <p className=' max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl'>
                 Transforme sua experiência no MMORPG em lucro real! Abra sua loja online e venda seus itens raros
-                diretamente para outros jogadores. Ganhe dinheiro jogando e alcance o próximo nível de sucesso!
+                diretamente para outros jogadores. Ganhe dinheiro jogando e alcance o próximo níve de sucesso!
               </p>
             </div>
-            <img
-              src='https://res.cloudinary.com/dbkrvt2x0/image/upload/v1715882864/kakele-wiki/background/fmjsfk5yb2ush4si68b6.jpg'
-              width='400'
-              height='400'
-              alt='Tamara Melnik'
-              className='absolute opacity-60 md:opacity-100 top-0 mx-auto aspect-square overflow-hidden rounded-tr-[50%] rounded-bl-[50%] rounded-br-[20%] rounded-tl-[20%] object-cover object-center sm:w-full md:static'
+            <video
+              className='absolute top-0 mx-auto aspect-square overflow-hidden rounded-bl-[50%] rounded-br-[20%] rounded-tl-[20%] rounded-tr-[50%] object-cover object-center opacity-60 sm:w-full md:static md:opacity-100'
+              src='/img/pricing/cc.mp4'
+              width={400}
+              height={400}
+              muted
+              autoPlay
+              loop
             />
           </div>
         </section>
-        <section id='skills' className='z-10 mt-40 w-full gap-8 pb-12 md:pb-24 lg:pb-32'>
+        <section id='cards' className='z-10 mt-40 w-full gap-8 bg-secondary/30 pb-12 md:py-24 lg:pb-32'>
           <div className='container grid items-center justify-center gap-4 px-4 md:px-6 lg:gap-10'>
-            <div className='space-y-3 z-50 text-center'>
+            <div className='space-y-3 text-center'>
               <h2 className='text-start text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-center'>
                 O que oferecemos na My Store Games
               </h2>
@@ -39,28 +42,140 @@ export default function Component() {
                 experiência de venda de itens de jogos online simples e eficiente.
               </p>
             </div>
-            <div className='grid w-full grid-cols-2 items-start justify-center gap-12 mt-12 lg:grid-cols-4 lg:gap-12'>
-              <div className='flex flex-col items-center justify-center gap-2'>
-                <LeafIcon className='h-12 w-12 text-gray-500 dark:text-gray-400' />
+            <div className='mt-12 grid w-full grid-cols-2 items-start justify-center gap-12 lg:grid-cols-4 lg:gap-12'>
+              <div className='relative flex flex-col items-center justify-center gap-2'>
+                <Image
+                  className='rounded-lg transition-all hover:scale-110'
+                  src='/img/pricing/11.png'
+                  width={128}
+                  height={128}
+                  alt='My Store Games'
+                />
                 <h3 className='text-lg font-bold'>Escolha seu jogo favorito</h3>
                 <p className='text-sm text-gray-500 dark:text-gray-400'>Tibia, Kakele Onlime, Rucoy, entre outros</p>
+                <svg
+                  className='absolute -top-16 left-64 w-28 '
+                  viewBox='0 0 400 400'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <title>SVGRepo icon</title>
+                  <g id='SVGRepo_bgCarrier' stroke-width='0' />
+                  <g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round' />
+                  <g id='SVGRepo_iconCarrier'>
+                    <path
+                      d='M35 262C160.529 140.938 328.006 207.285 361 215.518'
+                      stroke='#ffffff'
+                      stroke-opacity='0.9'
+                      stroke-width='16'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='M343.69 143C355.23 190.289 361 214.681 361 216.177C361 218.421 327.488 234.13 312 258'
+                      stroke='#ffffff'
+                      stroke-opacity='0.9'
+                      stroke-width='16'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                  </g>
+                </svg>
               </div>
-              <div className='flex flex-col items-center justify-center gap-2'>
-                <LeafIcon className='h-12 w-12 text-gray-500 dark:text-gray-400' />
+              <div className='relative flex flex-col items-center justify-center gap-2'>
+                <Image
+                  className='rounded-lg transition-all hover:scale-110'
+                  src='/img/pricing/13.png'
+                  width={128}
+                  height={128}
+                  alt='My Store Games'
+                />
                 <h3 className='text-lg font-bold'>Participe de missões</h3>
                 <p className='text-sm text-gray-500 dark:text-gray-400'>
                   errote mosntros e conquiste itens raros e valiosos.
                 </p>
+                <svg
+                  className='absolute bottom-12 left-64 w-28 -scale-y-100 transform'
+                  viewBox='0 0 400 400'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <title>SVGRepo icon</title>
+                  <g id='SVGRepo_bgCarrier' stroke-width='0' />
+                  <g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round' />
+                  <g id='SVGRepo_iconCarrier'>
+                    <path
+                      d='M35 262C160.529 140.938 328.006 207.285 361 215.518'
+                      stroke='#ffffff'
+                      stroke-opacity='0.9'
+                      stroke-width='16'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='M343.69 143C355.23 190.289 361 214.681 361 216.177C361 218.421 327.488 234.13 312 258'
+                      stroke='#ffffff'
+                      stroke-opacity='0.9'
+                      stroke-width='16'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                  </g>
+                </svg>
               </div>
-              <div className='flex flex-col items-center justify-center gap-2'>
-                <LeafIcon className='h-12 w-12 text-gray-500 dark:text-gray-400' />
+              <div className='relative flex flex-col items-center justify-center gap-2'>
+                <video
+                  className='rounded-lg transition-all hover:scale-110'
+                  src='/img/pricing/b.mp4'
+                  width={128}
+                  height={128}
+                  muted
+                  autoPlay
+                  loop
+                />
                 <h3 className='text-lg font-bold'>Crie e Personalize suas lojas</h3>
                 <p className='text-sm text-gray-500 dark:text-gray-400'>
                   Preencha com informações basicas e configure as suas lojas.
                 </p>
+                <svg
+                  className='absolute -top-16 left-64 w-28'
+                  viewBox='0 0 400 400'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <title>SVGRepo icon</title>
+                  <g id='SVGRepo_bgCarrier' stroke-width='0' />
+                  <g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round' />
+                  <g id='SVGRepo_iconCarrier'>
+                    <path
+                      d='M35 262C160.529 140.938 328.006 207.285 361 215.518'
+                      stroke='#ffffff'
+                      stroke-opacity='0.9'
+                      stroke-width='16'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='M343.69 143C355.23 190.289 361 214.681 361 216.177C361 218.421 327.488 234.13 312 258'
+                      stroke='#ffffff'
+                      stroke-opacity='0.9'
+                      stroke-width='16'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                  </g>
+                </svg>
               </div>
               <div className='flex flex-col items-center justify-center gap-2'>
-                <LeafIcon className='h-12 w-12 text-gray-500 dark:text-gray-400' />
+                <video
+                  className='rounded-lg transition-all hover:scale-110'
+                  src='/img/pricing/c.mp4'
+                  width={128}
+                  height={128}
+                  muted
+                  autoPlay
+                  loop
+                />
                 <h3 className='text-lg font-bold'>Compartilhe</h3>
                 <p className='text-sm text-gray-500 dark:text-gray-400'>
                   Outros jogadores interessem em seus itens podem entrar em contato diretamente.
@@ -69,7 +184,8 @@ export default function Component() {
             </div>
           </div>
         </section>
-        <section id='portfolio' className='mb-40 w-full bg-stone-900 py-12 md:py-24 lg:py-32'>
+
+        <section id='pricing' className='mb-40 w-full rounded-lg bg-primary/5 py-12 md:py-24 lg:py-32'>
           <div className='container grid items-center justify-center gap-4 px-4 md:px-6 lg:gap-10'>
             <div className='space-y-3 text-center'>
               <h2 className=' text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl'>Planos e Preços</h2>
@@ -78,7 +194,7 @@ export default function Component() {
               </p>
             </div>
             <div className=' grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
-              <Card className='bg-stone-800 drop-shadow-[0_7px_20px_rgba(0,0,0,0.4)]'>
+              <Card className='bg-stone-800 drop-shadow-[0_7px_20px_rgba(175,144,144,0.4)] transition-all hover:border-2 hover:border-[#c2b9b6]'>
                 <CardContent className='flex flex-col items-center justify-center gap-4 p-4'>
                   <img
                     src='https://res.cloudinary.com/dbkrvt2x0/image/upload/v1715882864/kakele-wiki/background/fmjsfk5yb2ush4si68b6.jpg'
@@ -93,7 +209,7 @@ export default function Component() {
                       <span className='text-xl'>R$</span> 0 <span className='text-sm'>/mês*</span>
                     </h4>
                     <p className='min-h-[5rem] text-[0.8rem] text-gray-500 dark:text-gray-400'>
-                      deal para quem está começando. Basta fazer o login para ter acesso à loja de afiliados da
+                      Ideal para quem está começando. Basta fazer o login para ter acesso à loja de afiliados da
                       Coinshub. Você pode vender todos os produtos Coinshub e ganhar comissão por cada venda.
                     </p>
                     <Button variant='shine' className='w-full'>
@@ -112,7 +228,7 @@ export default function Component() {
                   </div>
                 </CardContent>
               </Card>
-              <Card className='scale-105 bg-[#0f1414] drop-shadow-[0_7px_20px_rgba(28,104,113,0.4)]'>
+              <Card className='scale-105 bg-[#0f1414] drop-shadow-[0_7px_20px_rgba(28,104,113,0.4)] transition-all hover:border-2 hover:border-[#69a1f5]'>
                 <CardContent className='flex flex-col items-center justify-center gap-4 p-4'>
                   <img
                     src='https://res.cloudinary.com/dbkrvt2x0/image/upload/v1715882864/kakele-wiki/background/fmjsfk5yb2ush4si68b6.jpg'
@@ -154,7 +270,7 @@ export default function Component() {
                   </div>
                 </CardContent>
               </Card>
-              <Card className='bg-[#0f140f] drop-shadow-[0_7px_20px_rgba(55,113,28,0.4)]'>
+              <Card className='bg-[#0f140f] drop-shadow-[0_7px_20px_rgba(199,219,95,0.4)] transition-all hover:border-2 hover:border-[#fcc556]'>
                 <CardContent className='flex flex-col items-center justify-center gap-4 p-4'>
                   <img
                     src='https://res.cloudinary.com/dbkrvt2x0/image/upload/v1715882864/kakele-wiki/background/fmjsfk5yb2ush4si68b6.jpg'
@@ -172,7 +288,7 @@ export default function Component() {
                       Inclui todos os benefícios do Plano Premium, além de oferecer maior destaque para sua loja de
                       itens, maximizando suas vendas.
                     </p>
-                    <Button variant='shine' className='w-full bg-lime-700'>
+                    <Button variant='shine' className='w-full bg-yellow-500'>
                       Assinar
                     </Button>
                     <div className='flex w-full items-center justify-center py-6'>
@@ -201,114 +317,5 @@ export default function Component() {
         </section>
       </main>
     </div>
-  );
-}
-
-function CodeIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <polyline points='16 18 22 12 16 6' />
-      <polyline points='8 6 2 12 8 18' />
-    </svg>
-  );
-}
-
-function DatabaseIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <ellipse cx='12' cy='5' rx='9' ry='3' />
-      <path d='M3 5V19A9 3 0 0 0 21 19V5' />
-      <path d='M3 12A9 3 0 0 0 21 12' />
-    </svg>
-  );
-}
-
-function FingerprintIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <path d='M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4' />
-      <path d='M14 13.12c0 2.38 0 6.38-1 8.88' />
-      <path d='M17.29 21.02c.12-.6.43-2.3.5-3.02' />
-      <path d='M2 12a10 10 0 0 1 18-6' />
-      <path d='M2 16h.01' />
-      <path d='M21.8 16c.2-2 .131-5.354 0-6' />
-      <path d='M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2' />
-      <path d='M8.65 22c.21-.66.45-1.32.57-2' />
-      <path d='M9 6.8a6 6 0 0 1 9 5.2v2' />
-    </svg>
-  );
-}
-
-function LeafIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <path d='M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z' />
-      <path d='M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12' />
-    </svg>
-  );
-}
-
-function RedoDotIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <circle cx='12' cy='17' r='1' />
-      <path d='M21 7v6h-6' />
-      <path d='M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7' />
-    </svg>
   );
 }

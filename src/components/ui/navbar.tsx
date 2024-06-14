@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, Settings2, User, X } from 'lucide-react';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { usePathname } from 'next/navigation';
@@ -21,20 +20,24 @@ import {
 } from './navigation-menu';
 import { MobileLanguageToggle } from './language-toggle';
 import Card from './bordered-card';
+import AnimatedMenu from '../navbar/animated-menu';
+import { ThemeToggle } from '../themes/theme-toggle';
+import type { Session } from 'next-auth';
 
-export const Navbar = () => {
+interface ComponentProps {
+  session: Session | null;
+}
+
+export function Navbar({ session }: ComponentProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+
+  const path = usePathname();
+  const isDashboardPath = path.startsWith('/dashboard') || disableNavWithFooter.includes(path);
 
   const toggleMenu = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-
-  const path = usePathname();
-
-  const isDashboardPath = path.startsWith('/dashboard') || disableNavWithFooter.includes(path);
-
-  const session = useSession();
 
   const itemOptions = [
     { label: 'Helmet', size: 2, id: 'Helmet', image: 'Dragon Winged Helmet' },
@@ -84,12 +87,12 @@ export const Navbar = () => {
               Kakele <span className='font-bold text-orange-500'>Wiki</span>
             </div>
           </Link>
-          <div className='hidden w-full flex-row items-center justify-end lg:flex'>
+          <div className='relative hidden w-full flex-row items-center justify-center lg:flex'>
             <div className='ml-20 w-full px-8'>
-              <NavigationMenu className='list-none'>
+              <NavigationMenu className='flex list-none items-center justify-center'>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className='bg-transparent'>{t('navbar.items.label')}</NavigationMenuTrigger>
-                  <NavigationMenuContent className='bg-stone-950'>
+                  <NavigationMenuContent>
                     <ul className='grid w-[500px] grid-cols-2 gap-3 p-1'>
                       <div
                         className='relative rounded-lg'
@@ -126,10 +129,16 @@ export const Navbar = () => {
                       </div>
                       <div className='grid grid-cols-2 items-center justify-center gap-2 p-2'>
                         {itemOptions.map((item) => (
-                          <Link className='w-full h-full' href={`/items?filter=${item.id}`} key={item.id}>
+                          <div
+                            className='h-full w-full cursor-pointer'
+                            onClick={() => {
+                              window.location.href = `/items?filter=${item.id}`;
+                            }}
+                            key={item.id}
+                          >
                             <Card
                               noPadding
-                              className='flex h-full w-full flex-col items-center justify-center bg-stone-900 p-1'
+                              className='flex h-full w-full flex-col items-center justify-center border-border/50 bg-ring/30 p-1 transition-all hover:bg-ring/50'
                             >
                               <Image
                                 alt={item.label}
@@ -141,7 +150,7 @@ export const Navbar = () => {
                                 {t(`kakele.itemTypes.${item.id.replaceAll(' ', '')}`)}
                               </span>
                             </Card>
-                          </Link>
+                          </div>
                         ))}
                       </div>
                     </ul>
@@ -186,10 +195,10 @@ export const Navbar = () => {
                       </div>
                       <div className='flex h-full w-full flex-col items-center justify-center gap-2 p-1'>
                         {tools.map((item) => (
-                          <Link className='w-full h-full' href={item.href} key={item.id}>
+                          <Link onClick={() => setOpen(false)} className='h-full w-full' href={item.href} key={item.id}>
                             <Card
                               noPadding
-                              className='flex h-full w-full flex-col items-center justify-center p-1'
+                              className='flex h-full w-full flex-col items-center justify-center border-border/50 bg-ring/30 p-1 hover:bg-ring/50'
                             >
                               <span className='text-md ml-2'>{t(`navbar.tools.${item.id}`)}</span>
                             </Card>
@@ -199,17 +208,23 @@ export const Navbar = () => {
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
+                <NavigationMenuItem className='flex items-center justify-center'>
+                  <Link
+                    onClick={() => setOpen(false)}
+                    className='flex items-center justify-center'
+                    href='/monsters'
+                    legacyBehavior
+                    passHref
+                  >
+                    <NavigationMenuLink className='flex items-center justify-center text-sm'>
+                      {t('navbar.monsters')}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                {/* <Link href={'/pricing'} className='text-xs ml-2'>Pricing</Link> */}
               </NavigationMenu>
             </div>
-            <Link href={session.data?.user ? '/dashboard' : '/login'}>
-              <button
-                className='flex animate-buttonheartbeat flex-row items-center justify-center gap-2 rounded-md bg-orange-800/40 px-4 py-1 text-sm font-semibold text-white'
-                type='button'
-              >
-                {session.data?.user ? <Settings2 size={16} /> : <User size={16} />}
-                {session.data?.user ? 'Dashboard' : 'Login'}
-              </button>
-            </Link>
+            <AnimatedMenu session={session} />
           </div>
           <div className='cursor-pointer lg:hidden' onClick={toggleMenu}>
             <Menu />
@@ -219,7 +234,7 @@ export const Navbar = () => {
           {open && (
             <motion.div
               animate='animate'
-              className='fixed left-0 top-0 z-[999] h-screen w-full origin-top bg-stone-900 p-10 text-white backdrop-blur-xl'
+              className='fixed left-0 top-0 z-[999] h-screen w-full origin-top bg-black/80 p-10 text-white backdrop-blur-xl'
               exit='exit'
               initial='initial'
               variants={{
@@ -246,7 +261,11 @@ export const Navbar = () => {
             >
               <div className='flex h-full flex-col'>
                 <div className='flex justify-between'>
-                  <Link className='flex flex-row flex-nowrap items-center justify-center' href='/'>
+                  <Link
+                    onClick={() => setOpen(false)}
+                    className='flex flex-row flex-nowrap items-center justify-center'
+                    href='/'
+                  >
                     <Image
                       className='h-6 w-6'
                       alt='Kakele Online'
@@ -314,7 +333,9 @@ export const Navbar = () => {
                                 },
                               }}
                             >
-                              <Link href={`/items?filter=${option.id}`}>{t(`kakele.itemTypes.${option.id}`)}</Link>
+                              <Link onClick={() => setOpen(false)} href={`/items?filter=${option.id}`}>
+                                {t(`kakele.itemTypes.${option.id}`)}
+                              </Link>
                             </motion.div>
                           ))}
                         </motion.div>
@@ -356,9 +377,14 @@ export const Navbar = () => {
                                 },
                               }}
                             >
-                              <Link href={option.href}>{t(`navbar.tools.${option.id}`)}</Link>
+                              <Link onClick={() => setOpen(false)} href={option.href}>
+                                {t(`navbar.tools.${option.id}`)}
+                              </Link>
                             </motion.div>
                           ))}
+                          <Link onClick={() => setOpen(false)} href='/monsters'>
+                            {t('navbar.monsters')}
+                          </Link>
                         </motion.div>
                       </div>
                     </motion.div>
@@ -367,16 +393,17 @@ export const Navbar = () => {
                     className='flex w-full flex-col items-center justify-center gap-2'
                     variants={mobileLinkVars}
                   >
-                    <Link href={session.data?.user ? '/dashboard' : '/login'}>
+                    <Link onClick={() => setOpen(false)} href={session?.user ? '/dashboard' : '/login'}>
                       <button
-                        className='text-md relative flex items-center justify-center gap-2 rounded-md p-2 px-4 font-bold uppercase text-gray-300 transition-colors duration-400 hover:bg-stone-800 hover:text-white focus:text-white focus:outline-none'
+                        className='text-md relative flex items-center justify-center gap-2 rounded-md p-2 px-4 font-bold uppercase text-gray-300 transition-colors duration-400 hover:text-white focus:text-white focus:outline-none'
                         type='button'
                       >
-                        {session.data?.user ? <Settings2 size={16} /> : <User size={16} />}
-                        {session.data?.user ? 'Dashboard' : 'Login'}
+                        {session?.user ? <Settings2 size={16} /> : <User size={16} />}
+                        {session?.user ? 'Dashboard' : 'Login'}
                       </button>
                     </Link>
                     <MobileLanguageToggle />
+                    <ThemeToggle />
                   </motion.div>
                 </motion.div>
               </div>
@@ -386,7 +413,7 @@ export const Navbar = () => {
       </header>
     )
   );
-};
+}
 
 const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'>>(
   ({ className, title, children, ...props }, ref) => {

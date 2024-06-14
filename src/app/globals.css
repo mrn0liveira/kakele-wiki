@@ -4,54 +4,158 @@
 
 @layer base {
   :root {
-    --background: 0 58% 100%;
-    --foreground: 0 59% 4%;
-    --muted: 0 26% 90%;
-    --muted-foreground: 0 1% 25%;
-    --popover: 0 58% 100%;
-    --popover-foreground: 0 59% 4%;
-    --card: 0 0% 99%;
-    --card-foreground: 0 59% 3%;
-    --border: 0 2% 93%;
-    --input: 0 2% 93%;
-    --primary: 0 0% 32%;
-    --primary-foreground: 0 0% 92%;
-    --secondary: 0 7% 91%;
-    --secondary-foreground: 0 7% 31%;
-    --accent: 0 12% 82%;
-    --accent-foreground: 0 12% 22%;
-    --destructive: 11 80% 24%;
-    --destructive-foreground: 11 80% 84%;
-    --ring: 0 0% 32%;
+    --background: 81 30% 98%;
+    --foreground: 81 73% 0%;
+    --muted: 81 26% 87%;
+    --muted-foreground: 81 15% 26%;
+    --popover: 81 30% 98%;
+    --popover-foreground: 81 73% 0%;
+    --card: 81 30% 97%;
+    --card-foreground: 0 0% 0%;
+    --border: 81 7% 88%;
+    --input: 81 7% 88%;
+    --primary: 81 13% 24%;
+    --primary-foreground: 81 13% 84%;
+    --secondary: 81 19% 89%;
+    --secondary-foreground: 81 19% 29%;
+    --accent: 81 25% 81%;
+    --accent-foreground: 81 25% 21%;
+    --destructive: 0 96% 21%;
+    --destructive-foreground: 0 96% 81%;
+    --ring: 81 13% 24%;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 0 55% 3%;
-    --foreground: 0 27% 97%;
-    --muted: 0 26% 10%;
-    --muted-foreground: 0 1% 75%;
-    --popover: 0 55% 3%;
-    --popover-foreground: 0 27% 97%;
-    --card: 0 55% 4%;
-    --card-foreground: 0 27% 98%;
-    --border: 0 2% 15%;
-    --input: 0 2% 15%;
-    --primary: 0 0% 32%;
-    --primary-foreground: 0 0% 92%;
-    --secondary: 0 18% 14%;
-    --secondary-foreground: 0 18% 74%;
-    --accent: 0 25% 21%;
-    --accent-foreground: 0 25% 81%;
-    --destructive: 11 80% 56%;
+    --background: 81 30% 98%;
+    --foreground: 81 73% 0%;
+    --muted: 81 26% 87%;
+    --muted-foreground: 81 15% 26%;
+    --popover: 81 30% 98%;
+    --popover-foreground: 81 73% 0%;
+    --card: 81 30% 97%;
+    --card-foreground: 0 0% 0%;
+    --border: 81 7% 88%;
+    --input: 81 7% 88%;
+    --primary: 81 13% 24%;
+    --primary-foreground: 81 13% 84%;
+    --secondary: 81 19% 89%;
+    --secondary-foreground: 81 19% 29%;
+    --accent: 81 25% 81%;
+    --accent-foreground: 81 25% 21%;
+    --destructive: 0 96% 21%;
+    --destructive-foreground: 0 96% 81%;
+    --ring: 81 13% 24%;
+    --radius: 0.5rem;
+  }
+
+  html[data-theme='dark'] {
+    --background: 198 14.3% 2.08%;
+    --foreground: 198 2.2% 96.3%;
+
+    --muted: 198 11% 7.800000000000001%;
+    --muted-foreground: 198 2.2% 52.6%;
+
+    --popover: 198 60.6% 3.38%;
+    --popover-foreground: 198 2.2% 96.3%;
+
+    --card: 198 60.6% 3.38%;
+    --card-foreground: 198 2.2% 96.3%;
+
+    --border: 198 11% 7.800000000000001%;
+    --input: 198 11% 7.800000000000001%;
+
+    --primary: 198 22% 26%;
+    --primary-foreground: 198 2.2% 96.3%;
+
+    --secondary: 198 11% 7.800000000000001%;
+    --secondary-foreground: 198 2.2% 96.3%;
+
+    --accent: 198 11% 7.800000000000001%;
+    --accent-foreground: 198 2.2% 96.3%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 198 2.2% 96.3%;
+
+    --ring: 198 22% 26%;
+  }
+  html[data-theme='tropical-forest'] {
+    --background: 136 49% 2%;
+    --foreground: 136 35% 98%;
+    --muted: 316 14% 7%;
+    --muted-foreground: 316 3% 60%;
+    --popover: 136 49% 3%;
+    --popover-foreground: 136 35% 99%;
+    --card: 136 49% 3%;
+    --card-foreground: 136 35% 99%;
+    --border: 136 2% 11%;
+    --input: 136 2% 11%;
+    --primary: 136 11% 15%;
+    --primary-foreground: 136 11% 75%;
+    --secondary: 316 11% 15%;
+    --secondary-foreground: 316 11% 75%;
+    --accent: 316 11% 15%;
+    --accent-foreground: 316 11% 75%;
+    --destructive: 0 94% 60%;
     --destructive-foreground: 0 0% 100%;
-    --ring: 0 0% 32%;
+    --ring: 136 11% 15%;
+  }
+  html[data-theme='zygomorphic-focus'] {
+    --background: 175 43% 2%;
+    --foreground: 175 29% 97%;
+    --muted: 145 20% 12%;
+    --muted-foreground: 145 15% 63%;
+    --popover: 175 43% 2%;
+    --popover-foreground: 175 29% 97%;
+    --card: 175 43% 3%;
+    --card-foreground: 175 29% 98%;
+    --border: 175 5% 11%;
+    --input: 175 5% 11%;
+    --primary: 175 82% 16%;
+    --primary-foreground: 175 82% 56%;
+    --secondary: 145 82% 16%;
+    --secondary-foreground: 145 82% 56%;
+    --accent: 205 82% 16%;
+    --accent-foreground: 205 82% 76%;
+    --destructive: 12 82% 57%;
+    --destructive-foreground: 0 0% 0%;
+    --ring: 175 82% 16%;
+  }
+  html[data-theme='cocoon-rook'] {
+    --background: 356 52% 4%;
+    --foreground: 356 30% 97%;
+    --muted: 356 29% 14%;
+    --muted-foreground: 356 0% 68%;
+    --popover: 356 52% 5%;
+    --popover-foreground: 356 30% 98%;
+    --card: 356 52% 5%;
+    --card-foreground: 356 30% 98%;
+    --border: 356 2% 12%;
+    --input: 356 2% 12%;
+    --primary: 356 24% 15%;
+    --primary-foreground: 356 24% 75%;
+    --secondary: 356 9% 15%;
+    --secondary-foreground: 356 9% 75%;
+    --accent: 356 17% 21%;
+    --accent-foreground: 356 17% 81%;
+    --destructive: 19 85% 55%;
+    --destructive-foreground: 0 0% 0%;
+    --ring: 356 24% 15%;
+  }
+
+  html[data-theme='mint'] {
+    --primary: #6ee7b7;
+    --primary-foreground: #0f172a;
+  }
+  html[data-theme='dark-mint'] {
+    --primary: #047857;
+    --primary-foreground: #f8fafc;
   }
 }
 
 @layer base {
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
@@ -98,27 +202,6 @@
 }
 
 /* background: rgb(20, 17, 15) */
-
-.container-pattern {
-  background: rgb(20, 17, 15);
-  --gap: 5em;
-  --line: 1px;
-  --color: rgba(88, 51, 44, 0.2);
-
-  background-image: linear-gradient(
-      -90deg,
-      transparent calc(var(--gap) - var(--line)),
-      var(--color) calc(var(--gap) - var(--line) + 1px),
-      var(--color) var(--gap)
-    ),
-    linear-gradient(
-      0deg,
-      transparent calc(var(--gap) - var(--line)),
-      var(--color) calc(var(--gap) - var(--line) + 1px),
-      var(--color) var(--gap)
-    );
-  background-size: var(--gap) var(--gap);
-}
 
 .hero-shadow {
   filter: drop-shadow(4px 15px 15px #000000);

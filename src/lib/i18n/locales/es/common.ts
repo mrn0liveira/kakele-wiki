@@ -42,6 +42,7 @@ const messages = {
       gameMap: 'Mapa del Juego',
       forgeCalculator: 'Calculadora de Forja',
     },
+    monsters: 'Monstruos',
   },
   blog: {
     title: 'Artículos y Tutoriales',
@@ -198,25 +199,6 @@ const messages = {
     loss: 'Pérdida',
     profit: 'Beneficio',
     completedTasks: 'Tareas Completadas',
-  },
-  setCalculator: {
-    title: 'Calculadora de Conjunto',
-    description: 'Calcula el mejor conjunto para tu equipamiento.',
-    toolTitle: 'Configura tu equipamiento',
-    toolDescription: 'Selecciona nivel, vocación y objetos para calcular el mejor conjunto.',
-    itemsInvTitle: 'Inventario de Objetos',
-    itemsInvDescription: 'Haz clic para ver detalles del objeto.',
-    totalStatsTitle: 'Estadísticas Totales',
-    ignoredItemsTitle: 'Objetos Ignorados',
-    filtersTitle: 'Filtros',
-    filtersDescription: 'Selecciona tus filtros deseados.',
-    vocationMenuTitle: 'Vocación',
-
-    attributeMenuTitle: 'Atributo',
-    elementMenuTitle: 'Energía',
-    resultTitle: 'Conjunto de Objetos',
-    excludeExpensiveItems: 'Excluir Objetos Caros',
-    resultDescription: 'Mejor conjunto para tu equipamiento con base en nivel, vocación y objetos.',
   },
   items: {
     title: 'Objetos de Kakele',

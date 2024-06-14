@@ -36,7 +36,7 @@ export default function ForgeCalculatorContainer({ lng }: { lng: string }) {
     setResources(resources);
 
     if (value % 5 !== 0) {
-      setFirstForgeLevel(value * 5);
+      setFirstForgeLevel(Math.round(value * 5));
     }
   }, [debouncedValue]);
 
@@ -83,12 +83,7 @@ export default function ForgeCalculatorContainer({ lng }: { lng: string }) {
 
   return (
     <div className='relative flex min-h-[40rem] flex-col items-center justify-center space-y-8 p-8 text-center'>
-      <div
-        className='absolute top-0 flex w-full items-center justify-center'
-        style={{
-          background: 'linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(20, 17, 15, 1) 100%)',
-        }}
-      >
+      <div className='absolute top-0 flex w-full items-center justify-center'>
         <div className='flex h-auto w-[40rem] flex-col items-center justify-center'>
           <h2 className='mt-8 px-4 pt-8 text-2xl font-bold'>{t('forgeCalculator.cardTitle')}</h2>
           <p className='px-4 text-xs'>{t('forgeCalculator.cardDescription')}</p>
@@ -104,12 +99,7 @@ export default function ForgeCalculatorContainer({ lng }: { lng: string }) {
           </div>
         </div>
       </div>
-      <div
-        className='absolute bottom-0 flex h-[10rem] w-full items-center justify-center'
-        style={{
-          background: 'linear-gradient(to top, rgba(20, 17, 15, 1) 0%, rgba(0, 0, 0, 0) 100%)',
-        }}
-      />
+      <div className='absolute bottom-0 flex h-[10rem] w-full items-center justify-center' />
       <div className='flex flex-col items-center gap-4 pb-20 pt-[6rem] lg:pt-[8rem]'>
         <div className='mt-16 flex flex-wrap items-center justify-center gap-8'>
           {resources && (
@@ -134,7 +124,7 @@ export default function ForgeCalculatorContainer({ lng }: { lng: string }) {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.2, ease: 'easeInOut' }}
                                 exit={{ opacity: 0, y: 20 }}
-                                className=' absolute -top-6 flex flex-row items-center justify-center gap-1 rounded-md bg-stone-900/20 px-2'
+                                className=' absolute -top-6 flex flex-row items-center justify-center gap-1 rounded-md bg-primary px-2'
                               >
                                 <Image
                                   src={
@@ -152,7 +142,7 @@ export default function ForgeCalculatorContainer({ lng }: { lng: string }) {
                             )}
                           <div
                             className={cn(
-                              'delay-75 group/effect flex items-center justify-center rounded-lg border-[1px] border-stone-950 border-t-white/10 bg-stone-900 drop-shadow-md transition-all hover:bg-stone-800/80'
+                              'group/effect flex items-center justify-center rounded-lg border-[1px] border-border border-t-white/10 bg-primary/30 drop-shadow-md transition-all delay-75 hover:bg-primary/80'
                             )}
                           >
                             <Image
@@ -175,12 +165,14 @@ export default function ForgeCalculatorContainer({ lng }: { lng: string }) {
                           </div>
                         </PopoverTrigger>
                         {resources[key as keyof typeof resources] > 0 && (
-                          <PopoverContent className='bg-stone-900 p-4'>
+                          <PopoverContent className='bg-background/80 p-4 backdrop-blur-lg'>
                             <div className='flex flex-col items-center justify-center gap-2 bg-none'>
                               <span>
                                 {t(`forgeCalculator.${key}`)} {t('forgeCalculator.popoverTitle')}
                               </span>
-                              <span className='text-xs text-white/70'>{t('forgeCalculator.popoverDescription')}</span>
+                              <span className='text-xs text-primary-foreground/70'>
+                                {t('forgeCalculator.popoverDescription')}
+                              </span>
                               <Input
                                 className='flex w-[8rem] items-center justify-center border-none text-center text-3xl font-bold'
                                 placeholder='0'
@@ -199,18 +191,20 @@ export default function ForgeCalculatorContainer({ lng }: { lng: string }) {
           )}
         </div>
         <div className='flex w-fit flex-col items-center'>
-          <div className='flex flex-row items-center justify-center rounded-md border-[1px] border-orange-800 bg-orange-800/40 px-4'>
-            <Image
-              src={'http://res.cloudinary.com/dbkrvt2x0/image/upload/v1716477552/kakele-wiki/icons/gold.png'}
-              className='aspect-square h-6 w-6'
-              alt={'Gold Icon'}
-              width={128}
-              height={128}
-            />
-            <span className='ml-2 text-3xl font-bold'>{new Intl.NumberFormat().format(handleTotalPrice())}</span>
-          </div>
+          {debouncedValue > 0 && (
+            <div className='flex flex-row items-center justify-center rounded-md border-[1px] border-orange-800 bg-orange-800/40 px-4'>
+              <Image
+                src={'http://res.cloudinary.com/dbkrvt2x0/image/upload/v1716477552/kakele-wiki/icons/gold.png'}
+                className='aspect-square h-6 w-6'
+                alt={'Gold Icon'}
+                width={128}
+                height={128}
+              />
+              <span className='ml-2 text-3xl font-bold'>{new Intl.NumberFormat().format(handleTotalPrice())}</span>
+            </div>
+          )}
           {Object.keys(marketValues).some((key) => marketValues[key as keyof typeof marketValues] > 0) && (
-            <div className='flex flex-col items-start mt-2'>
+            <div className='mt-2 flex flex-col items-start'>
               <span className='text-xs'>
                 {t('forgeCalculator.cost')} {new Intl.NumberFormat().format(resources.money)}
               </span>

@@ -3,16 +3,12 @@
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { Input, Image as NextUIImage } from '@nextui-org/react';
 import { useDebounce } from 'use-debounce';
 import { useQueryState } from 'nuqs';
 import Image from 'next/image';
 import Fuse from 'fuse.js';
 
 import { cn } from '@/src/lib/utils';
-import { BentoGrid, BentoGridItem } from '@/src/components/home/grid';
-
-import { NewHoverTabs } from '../set-calculator/new-hover-menu';
 import { KakeleItemModal } from '../set-calculator/modal-item';
 
 import type { KakeleAnyItem, KakeleItem } from '@/src/types';
@@ -20,6 +16,7 @@ import { getEnergyTextColor, getRarityTextColor } from '@/src/lib/kakele/util';
 import items from '@/src/lib/kakele/items';
 import { Popover, PopoverTrigger, PopoverContent } from '../../ui/popover';
 import Card from '../../ui/bordered-card';
+import { Input } from '../../ui/input';
 
 interface ComponentProps {
   lng: string;
@@ -49,9 +46,8 @@ interface ElementType {
 export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
   const { t } = useTranslation();
 
-  const testRef = useRef<null | HTMLDivElement>(null);
-
   const [queryValue, setQueryValue] = useQueryState('search');
+
   const [queryVocation, setQueryVocation] = useQueryState('v');
   const [queryElement, setQueryElement] = useQueryState('e');
   const [querySort, setQuerySort] = useQueryState('sort');
@@ -143,7 +139,7 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
       if (!item.slot || item.slot === 'Pet Food') continue;
 
       itemTypes.push({
-        label: item.slot,
+        label: t(`items.filterBy.${item.slot.replaceAll(' ', '')}`),
         id: item.slot,
       });
     }
@@ -152,7 +148,7 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
   const filterByOptions: FilterOptions[] = [
     ...itemTypes,
     {
-      label: 'None',
+      label: t('items.filterBy.None'),
       id: 'None',
     },
   ];
@@ -169,7 +165,7 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
   );
 
   const [filterBy, setFilterBy] = useState<FilterOptions>(
-    filterByOptions.find((f) => f.id === queryFilter) || filterByOptions[0]
+    filterByOptions.find((f) => f.id === queryFilter) || filterByOptions[filterByOptions.length - 1]
   );
 
   const [sortedItems, setSortedItems] = useState<KakeleAnyItem[]>(
@@ -281,17 +277,12 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
 
   return (
     <AnimatePresence mode='wait'>
-      <div className='relative flex flex-col items-center justify-center space-y-8 p-8 text-center' ref={testRef}>
-        <div
-          className='absolute top-0 flex w-full items-center justify-center'
-          style={{
-            background: 'linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(20, 17, 15, 1) 100%)',
-          }}
-        >
+      <div className='relative flex flex-col items-center justify-center space-y-8 p-8 text-center'>
+        <div className='absolute top-0 flex w-full items-center justify-center'>
           <div className='flex h-auto w-[40rem] flex-col items-center justify-center'>
             <h1 className='mt-8 px-4 pt-8 text-2xl font-bold'>{t('items.searchTitle')}</h1>
             <h2 className='px-4 pb-2 text-xs'>{t('items.searchDescription')}</h2>
-            <Input className='text-center' onChange={(e) => setValue(e.target.value)} value={value} />
+            <Input className='max-w-[70vw] text-center' onChange={(e) => setValue(e.target.value)} value={value} />
           </div>
         </div>
         <div className='flex w-full flex-col items-center justify-center pt-[10rem]'>
@@ -306,15 +297,17 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
           <div className='grid grid-cols-2 gap-8 py-4 lg:grid-cols-4'>
             <Popover>
               <PopoverTrigger className='flex flex-col'>
-                <span className='text-sm font-semibold'>{t('setCalculator.elementMenuTitle')}</span>
-                <span className='mb-4 text-sm font-semibold text-stone-400'>{t(`kakele.energy.${element.id}`)}</span>
+                <span className='text-sm font-semibold'>{t('items.element')}</span>
+                <span className='mb-4 text-sm font-semibold text-primary-foreground'>
+                  {t(`kakele.energy.${element.id}`)}
+                </span>
               </PopoverTrigger>
-              <PopoverContent className='z-[999] flex w-fit flex-col items-center justify-center gap-4 bg-stone-950/80 backdrop-blur-md'>
+              <PopoverContent className='z-[999] flex w-fit flex-col items-center justify-center gap-4 bg-background/80 backdrop-blur-md'>
                 <div className='flex w-full flex-col items-start'>
                   <span className='text-md'>{t('items.element')}</span>
                   <span className='text-xs'>Select your element</span>
                 </div>
-                <div className='flex w-full flex-wrap items-start gap-2'>
+                <div className='flex w-full max-w-[8rem] flex-wrap items-start gap-2'>
                   {elements.map((v: ElementType, index: number) => (
                     <span
                       onClick={() => {
@@ -322,8 +315,8 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
                       }}
                       key={v.id}
                       className={cn(
-                        v.id === vocation.id ? 'bg-stone-800' : 'bg-stone-900',
-                        'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-stone-800'
+                        v.id === element.id ? 'bg-secondary' : 'bg-secondary/50',
+                        'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-secondary/30'
                       )}
                     >
                       {v.label}
@@ -334,17 +327,17 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
             </Popover>
             <Popover>
               <PopoverTrigger className='flex flex-col'>
-                <span className='text-sm font-semibold'>{t('setCalculator.vocationMenuTitle')}</span>
-                <span className='mb-4 text-sm font-semibold text-stone-400'>
+                <span className='text-sm font-semibold'>{t('items.vocation')}</span>
+                <span className='mb-4 text-sm font-semibold text-primary-foreground'>
                   {t(`kakele.vocations.${vocation.id}`)}
                 </span>
               </PopoverTrigger>
-              <PopoverContent className='z-[999] flex w-fit flex-col items-center justify-center gap-4 bg-stone-950/80 backdrop-blur-md'>
+              <PopoverContent className='z-[999] flex w-fit flex-col items-center justify-center gap-4 bg-background/80 backdrop-blur-md'>
                 <div className='flex w-full flex-col items-start'>
                   <span className='text-md'>{t('items.vocation')}</span>
                   <span className='text-xs'>Select your vocation</span>
                 </div>
-                <div className='flex w-full flex-wrap items-start gap-2'>
+                <div className='flex w-full max-w-[8rem] flex-wrap items-start gap-2'>
                   {vocations.map((v: VocationType, index: number) => (
                     <span
                       onClick={() => {
@@ -352,8 +345,8 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
                       }}
                       key={v.id}
                       className={cn(
-                        v.id === vocation.id ? 'bg-stone-800' : 'bg-stone-900',
-                        'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-stone-800'
+                        v.id === vocation.id ? 'bg-secondary' : 'bg-secondary/50',
+                        'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-secondary/30'
                       )}
                     >
                       {v.label}
@@ -365,16 +358,16 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
             <Popover>
               <PopoverTrigger className='flex flex-col'>
                 <span className='text-sm font-semibold'>{t('items.sortByTitle')}</span>
-                <span className='mb-4 text-sm font-semibold text-stone-400'>
+                <span className='mb-4 text-sm font-semibold text-primary-foreground'>
                   {t(`kakele.vocations.${vocation.id}`)}
                 </span>
               </PopoverTrigger>
-              <PopoverContent className='z-[999] flex w-fit flex-col items-center justify-center gap-4 bg-stone-950/80 backdrop-blur-md'>
+              <PopoverContent className='z-[999] flex w-fit flex-col items-center justify-center gap-4 bg-background/80 backdrop-blur-md'>
                 <div className='flex w-full flex-col items-start'>
                   <span className='text-md'>{t('items.sortByTitle')}</span>
                   <span className='text-xs'>Select sort type </span>
                 </div>
-                <div className='flex w-full flex-wrap items-start gap-2'>
+                <div className='flex w-full max-w-[8rem] flex-wrap items-start gap-2'>
                   {sortByOptions.map((v: SortedItemsOptions, index: number) => (
                     <span
                       onClick={() => {
@@ -382,8 +375,8 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
                       }}
                       key={v.id}
                       className={cn(
-                        v.id === vocation.id ? 'bg-stone-800' : 'bg-stone-900',
-                        'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-stone-800'
+                        v.id === sortBy.id ? 'bg-secondary' : 'bg-secondary/50',
+                        'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-secondary/30'
                       )}
                     >
                       {v.label}
@@ -395,14 +388,16 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
             <Popover>
               <PopoverTrigger className='flex flex-col'>
                 <span className='text-sm font-semibold'>{t('items.filterByTitle')}</span>
-                <span className='mb-4 text-sm font-semibold text-stone-400'>{t(`items.filterBy.${filterBy.id}`)}</span>
+                <span className='mb-4 text-sm font-semibold text-primary-foreground'>
+                  {t(`items.filterBy.${filterBy.id.replaceAll(' ', '')}`)}
+                </span>
               </PopoverTrigger>
-              <PopoverContent className='z-[999] flex w-fit flex-col items-center justify-center gap-4 bg-stone-950/80 backdrop-blur-md'>
+              <PopoverContent className='z-[999] flex w-fit flex-col items-center justify-center gap-4 bg-background/80 backdrop-blur-md'>
                 <div className='flex w-full flex-col items-start'>
                   <span className='text-md'>{t('items.filterByTitle')}</span>
                   <span className='text-xs'>Select filter type</span>
                 </div>
-                <div className='flex w-full flex-wrap items-start gap-2'>
+                <div className='flex w-full max-w-[8rem] flex-wrap items-start gap-2'>
                   {filterByOptions.map((v: FilterOptions, index: number) => (
                     <span
                       onClick={() => {
@@ -410,8 +405,8 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
                       }}
                       key={v.id}
                       className={cn(
-                        v.id === vocation.id ? 'bg-stone-800' : 'bg-stone-900',
-                        'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-stone-800'
+                        v.id === filterBy.id ? 'bg-secondary' : 'bg-secondary/50',
+                        'cursor-pointer rounded-md px-2 py-1 text-xs transition-all hover:bg-secondary/30'
                       )}
                     >
                       {v.label}
@@ -423,92 +418,89 @@ export default function KakeleItemsContainer({ lng = 'en' }: ComponentProps) {
           </div>
           <div className='flex w-full flex-col'>
             {itemTypes.map((itemType) => (
-              <div key={itemType.id}>
+              <div key={itemType.id} className='flex w-full flex-col gap-4'>
                 {sortedItems.filter((x) => 'slot' in x && x.slot === itemType.id).length > 0 && (
-                  <BentoGrid
-                    className='relative mb-20 w-full max-w-none items-center justify-center md:auto-rows-auto'
-                    key={itemType.id}
-                  >
-                    <div className='group/effect sticky top-2 z-[100] flex h-full items-center justify-center overflow-hidden rounded-md bg-stone-800 opacity-100 md:static lg:-top-8'>
-                      <div className='relative flex h-full w-full items-center justify-center'>
-                        <Image
-                          alt={itemType.label}
-                          className='absolute w-full object-cover transition-all group-hover/effect:scale-110'
-                          height={400}
-                          src={`https://res.cloudinary.com/dl3asnoii/image/upload/v1711069907/kakele.com.br/items/${itemType.id.toLowerCase()}.png`}
-                          width={400}
-                        />
-                        <span className='z-10 text-xl font-bold drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] lg:text-2xl'>
-                          {t(`kakele.itemTypes.${itemType.id.replaceAll(' ', '')}`)}
-                        </span>
-                      </div>
+                  <div className='group/effect sticky top-2 z-[100] flex h-full items-center justify-center overflow-hidden rounded-md bg-ring/80 opacity-100 md:static lg:-top-8'>
+                    <div className='relative flex h-full w-full items-center justify-center'>
+                      <Image
+                        alt={itemType.label}
+                        className='absolute w-full object-cover transition-all group-hover/effect:scale-110'
+                        height={400}
+                        src={`https://res.cloudinary.com/dl3asnoii/image/upload/v1711069907/kakele.com.br/items/${itemType.id.toLowerCase()}.png`}
+                        width={400}
+                      />
+                      <span className='z-10 p-1 text-xl font-bold drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] lg:text-2xl'>
+                        {t(`kakele.itemTypes.${itemType.id.replaceAll(' ', '')}`)}
+                      </span>
                     </div>
-
-                    {sortedItems
-                      .filter((x) => 'slot' in x && x.slot === itemType.id)
-                      .map((item) => (
-                        <div
-                          key={item.name}
-                          onClick={() => {
-                            setCurrentItem(item);
-                            setIsItemModalOpen(true);
-                          }}
-                          onKeyDown={() => {
-                            setCurrentItem(item);
-                            setIsItemModalOpen(true);
-                          }}
-                        >
-                          <Card
-                            noPadding
-                            disableHalo
-                            className='group/effect relative h-fit w-full bg-stone-900/50 p-1 px-4 shadow-input transition duration-200 hover:bg-stone-950 hover:shadow-xl dark:border-white/[0.2] dark:shadow-none'
+                  </div>
+                )}
+                {sortedItems.filter((x) => 'slot' in x && x.slot === itemType.id).length > 0 && (
+                  <div key={itemType.id}>
+                    <div className='relative mb-20 grid w-full max-w-none grid-cols-1 items-center justify-center gap-2 sm:grid-cols-2 2xl:grid-cols-4'>
+                      {sortedItems
+                        .filter((x) => 'slot' in x && x.slot === itemType.id)
+                        .map((item) => (
+                          <div
+                            className='w-full'
+                            key={item.name}
+                            onClick={() => {
+                              setCurrentItem(item);
+                              setIsItemModalOpen(true);
+                            }}
+                            onKeyDown={() => {
+                              setCurrentItem(item);
+                              setIsItemModalOpen(true);
+                            }}
                           >
-                            <div className='relative flex w-full flex-col'>
-                              <Image
-                                alt={item.name}
-                                className='absolute -left-2 h-[3rem] w-[3rem] rounded-xl border-[1px] border-stone-700 bg-stone-900 lg:-left-2 lg:-top-0'
-                                height={64}
-                                src={
-                                  new URL(
-                                    `https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/${item.name.replaceAll("'", '')}.png`
-                                  ).href
-                                }
-                                width={64}
-                              />
-                              <div className='max-w-[80vw] overflow-hidden text-nowrap text-center text-lg font-bold lg:text-3xl'>
-                                <span className='text-xs font-bold'>
-                                  {'energy' in item && (
-                                    <span className={cn(getEnergyTextColor(item.energy))}>
-                                      {t(`kakele.energy.${item.energy}`)}
-                                    </span>
-                                  )}{' '}
-                                  <span className={cn(getRarityTextColor(item.rarity))}>
-                                    {t(`kakele.rarities.${item.rarity}`)}
-                                  </span>{' '}
-                                </span>
-                                <h3 className='text-center text-sm font-bold'>
-                                  {/* 
+                            <div className='group/effect relative rounded-md border-border/50 bg-primary/10 p-1 px-8 shadow-input transition duration-200 hover:bg-primary/50 hover:shadow-xl'>
+                              <div className='flex flex-col'>
+                                <Image
+                                  alt={item.name}
+                                  className='absolute left-1 top-1 h-[2.5rem] w-[2.5rem] rounded-xl border-[1px] border-border/50 bg-secondary/50'
+                                  height={64}
+                                  src={
+                                    new URL(
+                                      `https://raw.githubusercontent.com/mrn0liveira/kakele-biridim/main/src/assets/sprites/items/${item.name.replaceAll("'", '')}.png`
+                                    ).href
+                                  }
+                                  width={64}
+                                />
+                                <div className='max-w-[80vw] overflow-hidden text-nowrap text-center text-lg font-bold lg:text-3xl'>
+                                  <span className='text-xs font-bold'>
+                                    {'energy' in item && (
+                                      <span className={cn(getEnergyTextColor(item.energy))}>
+                                        {t(`kakele.energy.${item.energy}`)}
+                                      </span>
+                                    )}{' '}
+                                    <span className={cn(getRarityTextColor(item.rarity))}>
+                                      {t(`kakele.rarities.${item.rarity}`)}
+                                    </span>{' '}
+                                  </span>
+                                  <h3 className='text-center text-sm font-bold'>
+                                    {/* 
                          									         // @ts-ignore */}
-                                  {item[`language.${lng}`]}
-                                </h3>
+                                    {item[`language.${lng}`]}
+                                  </h3>
+                                </div>
+                                <span className='text-xs'>
+                                  {t(`items.sortBy.${sortBy.id}`)}{' '}
+                                  {'stats' in item && sortBy.attribute
+                                    ? new Intl.NumberFormat().format(
+                                        // @ts-ignore
+                                        item.stats[sortBy.id]
+                                      )
+                                    : new Intl.NumberFormat().format(
+                                        // @ts-ignore
+                                        item[sortBy.id]
+                                      )}
+                                </span>
                               </div>
-                              <span className='text-xs'>
-                                {t(`items.sortBy.${sortBy.id}`)}{' '}
-                                {'stats' in item && sortBy.attribute
-                                  ? new Intl.NumberFormat().format(
-                                      // @ts-ignore
-                                      item.stats[sortBy.id]
-                                    )
-                                  : new Intl.NumberFormat().format(
-                                      // @ts-ignore
-                                      item[sortBy.id]
-                                    )}
-                              </span>
                             </div>
-                          </Card>
-                        </div>
-                      ))}
-                  </BentoGrid>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
                 )}
               </div>
             ))}

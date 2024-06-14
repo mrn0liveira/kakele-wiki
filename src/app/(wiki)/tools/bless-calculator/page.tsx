@@ -9,7 +9,7 @@ export default async function Home() {
   const language = await detectLanguage();
 
   return (
-    <div className='flex h-full flex-col items-center'>
+    <div className='flex h-full w-full flex-col items-center'>
       <div className='relative mt-12 flex h-40 w-full flex-col items-center justify-center px-4'>
         <h2 className='__className_d6dd13 text-animation z-10 text-5xl md:text-6xl'>{t('blessCalculator.title')}</h2>
         <span className='z-10'>{t('blessCalculator.description')}</span>
@@ -17,7 +17,7 @@ export default async function Home() {
           <EmojiCarousel />
         </div>
       </div>
-      <div className='mt-8 min-h-[40rem] w-[90vw] max-w-full items-center justify-center rounded-md bg-zinc-950/70'>
+      <div className='mt-8 min-h-[40rem] w-[90vw] max-w-full items-center justify-center rounded-md bg-primary/10'>
         <BlessCalculatorContainer lng={language} />
       </div>
     </div>

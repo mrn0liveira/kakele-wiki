@@ -6,6 +6,9 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "suspicious": {
+        "noArrayIndexKey": "off"
+      },
       "correctness": {
         "useJsxKeyInIterable": "off"
       },

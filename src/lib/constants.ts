@@ -80,4 +80,35 @@ export const BlessPercentages = {
     9: 9.64,
     10: 10,
   },
+  Relic: {
+    0: 0,
+    1: 25,
+    2: 41,
+    3: 54,
+    4: 64,
+    5: 72,
+    6: 79,
+    7: 85,
+    8: 91,
+    9: 96,
+    10: 100,
+  },
 };
+
+export const languagesMap = [
+  {
+    label: 'Português',
+    icon: 'br',
+    id: 'pt',
+  },
+  {
+    label: 'English',
+    icon: 'us',
+    id: 'en',
+  },
+  {
+    label: 'Español',
+    icon: 'es',
+    id: 'es',
+  },
+];

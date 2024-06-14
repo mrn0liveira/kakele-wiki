@@ -1,5 +1,5 @@
 import acceptLanguage from 'accept-language';
-import { type Namespace, createInstance } from 'i18next';
+import { createInstance } from 'i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import type { RequestCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
@@ -8,7 +8,7 @@ import { initReactI18next } from 'react-i18next/initReactI18next';
 
 import { type Language, fallbackLng, getOptions, languages } from './settings';
 
-const initI18next = async (language: Language, namespace?: Namespace) => {
+const initI18next = async (language: Language, namespace?: string) => {
   // on server side we create a new instance for each render, because during compilation everything seems to be executed in parallel
   const i18nInstance = createInstance();
 
@@ -64,7 +64,7 @@ export function detectLanguage() {
   return language;
 }
 
-export async function useServerTranslation(namespace?: Namespace) {
+export async function useServerTranslation(namespace?: string) {
   const language = detectLanguage();
   const i18nextInstance = await initI18next(language, namespace);
 

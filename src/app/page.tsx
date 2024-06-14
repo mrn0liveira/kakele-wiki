@@ -11,10 +11,10 @@ import { cn } from '@/src/lib/utils';
 import { BentoGrid, BlogPostSkeleton } from '@/src/components/home/grid';
 import HeroTrailer from '@/src/components/home/hero-trailer';
 
+import Card from '../components/ui/bordered-card';
+
 import '@/src/styles/Text-Animation.scss';
 import '@/src/styles/Home-card.css';
-
-import Card from '../components/ui/bordered-card';
 
 interface CardProps {
   title: string;
@@ -125,8 +125,9 @@ export default function Home() {
                 <Card
                   className={cn(
                     card.title === 'CoinsHub'
-                      ? 'outline outline-1 outline-offset-2 outline-orange-900 transition-all delay-75 hover:outline-orange-500'
-                      : ''
+                      ? 'outline outline-1 outline-offset-2 outline-secondary/50 transition-all delay-75 hover:outline-4 hover:outline-secondary'
+                      : '',
+                    'bg-secondary/30'
                   )}
                 >
                   <div className='flex flex-col'>
@@ -140,7 +141,7 @@ export default function Home() {
         </BentoGrid>
       </motion.div>
       <motion.div
-        className='mb-20 mt-8 flex h-auto w-full flex-col gap-2 rounded-md border-[1px] border-stone-900 bg-stone-950/50 p-2 transition-all'
+        className='mb-20 mt-8 flex h-auto w-full flex-col gap-2 rounded-md border-[1px] border-border/50 bg-card p-2 transition-all'
         initial={{ opacity: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
         viewport={{ once: true }}
@@ -158,7 +159,7 @@ export default function Home() {
                   viewport={{ once: true }}
                   whileInView={{ opacity: 1, y: 0 }}
                 >
-                  <BlogPostSkeleton className='bg-stone-900/50 p-4 shadow-input transition duration-200 hover:shadow-xl dark:border-white/[0.2] dark:shadow-none' />
+                  <BlogPostSkeleton />
                 </motion.div>
               ))}
           </>
@@ -177,7 +178,7 @@ export default function Home() {
                   <Link href={`/blog?id=${blog.id}`}>
                     <Card
                       noPadding
-                      className='group/effect flex max-w-max flex-col hover:shadow-xl md:flex-row lg:max-h-[18rem]'
+                      className='group/effect flex max-w-max flex-col border-border/50 bg-primary/20 hover:shadow-xl sm:flex-row lg:max-h-[18rem]'
                     >
                       <div className='flex min-h-full min-w-fit flex-row overflow-hidden rounded-xl'>
                         {blog.imageUrl && (
